@@ -2,7 +2,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![Cocoapods compatible](https://cocoapod-badges.herokuapp.com/v/SwiftyXMLParser/badge.png)
 
 
-Simple XML Parser implemented by Swift
+Simple XML Parser implemented in Swift
 
 # What's this?
 This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) and  [SWXMLHash](https://github.com/drmohundro/SWXMLHash).
