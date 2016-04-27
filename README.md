@@ -91,7 +91,7 @@ xml = try! XML.parse(string) // -> XML.Accessor
 let string = "<ResultSet><Result><Hit index=\"1\"><Name>Item1</Name></Hit><Hit index=\"2\"><Name>Item2</Name></Hit></Result></ResultSet>"
 let data = string.dataUsingEncoding(NSUTF8StringEncoding)
 
-xml = try! XML.parse(data) // -> XML.Accessor
+xml = XML.parse(data) // -> XML.Accessor
 ```
 
 ### 2. Access child Elements
