@@ -10,7 +10,7 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 [NSXMLParser](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSXMLParser_Class/) in Foundation framework is a kind of "SAX" parser. It has enough performance but is a little inconvenient. So we have implemented "DOM" parser wrapping it. 
 
 # Feature
-- [x] access XML Document with "subscript" literal.
+- [x] access XML Document with "subscript".
 - [x] access XML Document as SequenceType.
 - [x] easy debugging XML pathes.
 
