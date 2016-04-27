@@ -12,7 +12,7 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 # Feature
 - [x] access XML Document with "subscript" literal.
 - [x] access XML Document as SequenceType.
-- [x] debug wrong XML pathes easily.
+- [x] easy debugging XML pathes.
 
 # Requirement
 + iOS 7.0+
