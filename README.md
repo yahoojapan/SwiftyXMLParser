@@ -164,7 +164,7 @@ print(xml["ResultSet", "Result", "TypoKey"]) // -> "TypoKey not found."
 + for-in
 ```swift
 for element in xml["ResultSet", "Result", "Hit"] {
-  print($0.text)
+  print(element.text)
 }
 ```
 + map
