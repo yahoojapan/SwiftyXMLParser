@@ -11,7 +11,7 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 
 # Feature
 - [x] access XML Document with "subscript".
-- [x] access XML Document as SequenceType.
+- [x] access XML Document as Sequence.
 - [x] easy debugging XML pathes.
 
 # Requirement
@@ -171,12 +171,6 @@ for element in xml["ResultSet", "Result", "Hit"] {
 ```swift
 xml["ResultSet", "Result", "Hit"].map { $0["Name"].text }
 ```
-+ filter
-```swift
-xml["ResultSet", "Result", "Hit"].filter { $0["Name"].text != "Item2" }
-```
-
-etc...
 
 # License
 
