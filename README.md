@@ -190,7 +190,7 @@ Alamofire.request(.GET, "https://itunes.apple.com/us/rss/topgrossingapplications
 
 In addition, there is the extension of Alamofire to combine with SwiftyXMLPraser. 
 
-https://github.com/kazuhiro4949/Alamofire-SwiftyXMLParser
+* [Alamofire-SwiftyXMLParser](https://github.com/kazuhiro4949/Alamofire-SwiftyXMLParser)
 
 # License
 
