@@ -172,6 +172,25 @@ for element in xml["ResultSet", "Result", "Hit"] {
 xml["ResultSet", "Result", "Hit"].map { $0["Name"].text }
 ```
 
+## Work with Alamofire
+SwiftyXMLParser goes well with Alamofire. You can parse the response easily.
+
+```swift
+import Alamofire
+import SwiftyXMLParser
+
+Alamofire.request(.GET, "https://itunes.apple.com/us/rss/topgrossingapplications/limit=10/xml").responseData { response in
+    if let data = response.data {
+        let xml = XML.parse(data)
+        print(xml)
+    }
+}
+```
+
+In addition, there is the extension of Alamofire to combine with SwiftyXMLPraser. 
+
+https://github.com/kazuhiro4949/Alamofire-SwiftyXMLParser
+
 # License
 
 This software is released under the MIT License, see LICENSE.
