@@ -173,7 +173,7 @@ xml["ResultSet", "Result", "Hit"].map { $0["Name"].text }
 ```
 
 ## Work with Alamofire
-SwiftyXMLParser goes well with Alamofire. You can parse the response easily.
+SwiftyXMLParser goes well with [Alamofire](https://github.com/Alamofire/Alamofire). You can parse the response easily.
 
 ```swift
 import Alamofire
