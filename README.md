@@ -179,12 +179,13 @@ SwiftyXMLParser goes well with Alamofire. You can parse the response easily.
 import Alamofire
 import SwiftyXMLParser
 
-Alamofire.request(.GET, "https://itunes.apple.com/us/rss/topgrossingapplications/limit=10/xml").responseData { response in
-    if let data = response.data {
-        let xml = XML.parse(data)
-        print(xml)
-    }
-}
+Alamofire.request(.GET, "https://itunes.apple.com/us/rss/topgrossingapplications/limit=10/xml")
+         .responseData { response in
+            if let data = response.data {
+                let xml = XML.parse(data)
+                print(xml)
+            }
+        }
 ```
 
 In addition, there is the extension of Alamofire to combine with SwiftyXMLPraser. 
