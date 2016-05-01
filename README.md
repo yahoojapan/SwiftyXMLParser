@@ -183,7 +183,7 @@ Alamofire.request(.GET, "https://itunes.apple.com/us/rss/topgrossingapplications
          .responseData { response in
             if let data = response.data {
                 let xml = XML.parse(data)
-                print(xml)
+                print(xml["feed", "entry", 0, "title"].text) // outputs the top title of iTunes app raning.
             }
         }
 ```
