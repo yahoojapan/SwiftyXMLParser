@@ -38,8 +38,8 @@ class ParserTests: XCTestCase {
     }
     
     func testSuccessParse() {
-        guard let path = NSBundle(forClass: self.dynamicType).pathForResource("XMLDocument", ofType: "xml"),
-            let data = NSData(contentsOfFile: path) else {
+        guard let path = Bundle(for: self.dynamicType).pathForResource("XMLDocument", ofType: "xml"),
+            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
         }
@@ -55,8 +55,8 @@ class ParserTests: XCTestCase {
     }
     
     func testFailParse() {
-        guard let path = NSBundle(forClass: self.dynamicType).pathForResource("BrokenXMLDocument", ofType: "xml"),
-            let data = NSData(contentsOfFile: path) else {
+        guard let path = Bundle(for: self.dynamicType).pathForResource("BrokenXMLDocument", ofType: "xml"),
+            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
         }
@@ -70,8 +70,8 @@ class ParserTests: XCTestCase {
     }
     
     func testTextParseWithMockData() {
-        guard let path = NSBundle(forClass: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
-            let data = NSData(contentsOfFile: path) else {
+        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
         }
@@ -85,8 +85,8 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceParseWithMockData() {
-        guard let path = NSBundle(forClass: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
-            let data = NSData(contentsOfFile: path) else {
+        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
         }
@@ -100,8 +100,8 @@ class ParserTests: XCTestCase {
     }
     
     func testReturnParseWithMockData() {
-        guard let path = NSBundle(forClass: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
-            let data = NSData(contentsOfFile: path) else {
+        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
         }
@@ -115,8 +115,8 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceAndReturnParseWithMockData() {
-        guard let path = NSBundle(forClass: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
-            let data = NSData(contentsOfFile: path) else {
+        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
         }
@@ -131,14 +131,13 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceAndReturnParseWithMockDataAndTrimmingWhitespaceAndLineBreak() {
-        guard let path = NSBundle(forClass: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
-            let data = NSData(contentsOfFile: path) else {
+        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
         }
-    
-            
-        let xml = XML.Parser(trimming: .whitespaceAndNewlineCharacterSet()).parse(data)
+
+        let xml = XML.Parser(trimming: .whitespacesAndNewlines).parse(data)
         if let text = xml["Result", "WhitespaceReturn"].text {
             XCTAssertEqual("", text, "Parsed Success and trim them")
         } else {

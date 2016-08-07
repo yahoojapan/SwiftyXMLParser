@@ -25,11 +25,11 @@
 import Foundation
 
 extension XML {
-    class Parser: NSObject, NSXMLParserDelegate {
-        func parse(data: NSData) -> Accessor {
+    class Parser: NSObject, XMLParserDelegate {
+        func parse(_ data: Data) -> Accessor {
             stack = [Element]()
             stack.append(documentRoot)
-            let parser = NSXMLParser(data: data)
+            let parser = XMLParser(data: data)
             parser.delegate = self
             parser.parse()
             return Accessor(documentRoot)
@@ -39,16 +39,16 @@ extension XML {
             trimmingManner = nil
         }
         
-        init(trimming manner: NSCharacterSet) {
+        init(trimming manner: CharacterSet) {
             trimmingManner = manner
         }
         
         // MARK:- private
         private var documentRoot = Element(name: "XML.Parser.AbstructedDocumentRoot")
         private var stack = [Element]()
-        private let trimmingManner: NSCharacterSet?
+        private let trimmingManner: CharacterSet?
         
-        func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
             let node = Element(name: elementName)
             if !attributeDict.isEmpty {
                 node.attributes = attributeDict
@@ -61,7 +61,7 @@ extension XML {
             stack.append(node)
         }
         
-        func parser(parser: NSXMLParser, foundCharacters string: String) {
+        func parser(_ parser: XMLParser, foundCharacters string: String) {
             if let text = stack.last?.text {
                 stack.last?.text = text + (string ?? "")
             } else {
@@ -69,9 +69,9 @@ extension XML {
             }
         }
         
-        func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
             if let trimmingManner = self.trimmingManner {
-                stack.last?.text = stack.last?.text?.stringByTrimmingCharactersInSet(trimmingManner)
+                stack.last?.text = stack.last?.text?.trimmingCharacters(in: trimmingManner)
             }
             stack.removeLast()
         }

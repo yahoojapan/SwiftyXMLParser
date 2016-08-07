@@ -34,7 +34,7 @@ infix operator ?= {} // Failable Assignment
 /**
  assign value if rhs is not optonal. When rhs is optional, nothing to do.
 */
-public func ?=<T>(inout lhs: T, rhs: T?) {
+public func ?=<T>(lhs: inout T, rhs: T?) {
     if let unwrappedRhs = rhs {
         lhs = unwrappedRhs
     }
@@ -45,7 +45,7 @@ infix operator ?<< {} // Failable Push
 /**
  push value to array if rhs is not optonal. When rhs is optional, nothing to do.
 */
-public func ?<< <T>(inout lhs: [T], rhs: T?) {
+public func ?<< <T>(lhs: inout [T], rhs: T?) {
     if let unwrappedRhs = rhs {
         lhs.append(unwrappedRhs)
     }
@@ -92,7 +92,7 @@ public class XML {
     - parameter data:NSData XML document
     - returns:Accessor object to access XML document
     */
-    public class func parse(data: NSData) -> Accessor {
+    public class func parse(_ data: Data) -> Accessor {
         return Parser().parse(data)
     }
     
@@ -102,9 +102,9 @@ public class XML {
      - Parameter str:String XML document
      - Returns:Accessor object to access XML document
      */
-    public class func parse(str: String) throws -> Accessor {
-        guard let data = str.dataUsingEncoding(NSUTF8StringEncoding) else {
-            throw XML.Error.ParseError
+    public class func parse(_ str: String) throws -> Accessor {
+        guard let data = str.data(using: String.Encoding.utf8) else {
+            throw XML.Error.parseError
         }
         
         return Parser().parse(data)
@@ -117,7 +117,7 @@ public class XML {
      - parameter manner:NSCharacterSet If you wannna trim Text, assign this arg
      - returns:Accessor object to access XML document
      */
-    public class func parse(data: NSData, trimming manner: NSCharacterSet) -> Accessor {
+    public class func parse(_ data: Data, trimming manner: CharacterSet) -> Accessor {
         return Parser(trimming: manner).parse(data)
     }
     
@@ -128,9 +128,9 @@ public class XML {
      - parameter manner:NSCharacterSet If you wannna trim Text, assign this arg
      - Returns:Accessor object to access XML document
      */
-    public class func parse(str: String, trimming manner: NSCharacterSet) throws -> Accessor {
-        guard let data = str.dataUsingEncoding(NSUTF8StringEncoding) else {
-            throw XML.Error.ParseError
+    public class func parse(_ str: String, trimming manner: CharacterSet) throws -> Accessor {
+        guard let data = str.data(using: String.Encoding.utf8) else {
+            throw XML.Error.parseError
         }
         
         return Parser(trimming: manner).parse(data)
