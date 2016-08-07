@@ -403,12 +403,15 @@ extension XML {
                 generator = elements
             }
             var index = 0
-            return anyGenerator {
+            return AnyGenerator {
+                let nextAccessor: Accessor?
                 if index < generator.count {
-                    return Accessor(generator[index++])
+                    nextAccessor = Accessor(generator[index])
+                    index += 1
                 } else {
-                    return nil
+                    nextAccessor = nil
                 }
+                return nextAccessor
             }
         }
         
