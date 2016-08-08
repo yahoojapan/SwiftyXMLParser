@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
   s.author       = { "kahayash" => "kahayash@yahoo-corp.jp" }
 
   s.ios.deployment_target = "8.0"
+  s.tvos.deployment_target = "9.0"
   s.source_files = "SwiftyXMLParser/*.swift"
   s.requires_arc = true
 
