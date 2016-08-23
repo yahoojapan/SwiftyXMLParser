@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.source_files = "SwiftyXMLParser/*.swift"
   s.requires_arc = true
 
-  s.source       = { :git => "https://github.com/yahoojapan/SwiftyXMLParser.git", :tag => "1.0.0-swift2.3 " }
+  s.source       = { :git => "https://github.com/yahoojapan/SwiftyXMLParser.git", :tag => "1.0.0-swift2.3" }
 end
