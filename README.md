@@ -192,6 +192,15 @@ In addition, there is the extension of Alamofire to combine with SwiftyXMLPraser
 
 * [Alamofire-SwiftyXMLParser](https://github.com/kazuhiro4949/Alamofire-SwiftyXMLParser)
 
+# Support Future Swift Versions
+
+This repository has two specific branches.
+
++ support_swift2.3
++ support_swift3
+
+They are supporting future swift versions. I will merge them to master branch when the versions are officialy released.
+
 # License
 
 This software is released under the MIT License, see LICENSE.
