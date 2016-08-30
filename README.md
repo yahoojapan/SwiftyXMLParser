@@ -15,7 +15,7 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 - [x] easy debugging XML pathes.
 
 # Requirement
-+ iOS 7.0+
++ iOS 8.0+
 + Swift 2.0+
 
 # Installation
