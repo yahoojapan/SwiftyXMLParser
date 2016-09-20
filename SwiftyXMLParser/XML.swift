@@ -29,7 +29,7 @@ public protocol XMLSubscriptType {}
 extension Int: XMLSubscriptType {}
 extension String: XMLSubscriptType {}
 
-infix operator ?= {} // Failable Assignment
+infix operator ?= // Failable Assignment
 
 /**
  assign value if rhs is not optonal. When rhs is optional, nothing to do.
@@ -40,7 +40,7 @@ public func ?=<T>(lhs: inout T, rhs: T?) {
     }
 }
 
-infix operator ?<< {} // Failable Push
+infix operator ?<< // Failable Push
 
 /**
  push value to array if rhs is not optonal. When rhs is optional, nothing to do.
@@ -85,14 +85,14 @@ public func ?<< <T>(lhs: inout [T], rhs: T?) {
     }
  ```
 */
-public class XML {
+open class XML {
     /**
     Interface to parse NSData
     
     - parameter data:NSData XML document
     - returns:Accessor object to access XML document
     */
-    public class func parse(_ data: Data) -> Accessor {
+    open class func parse(_ data: Data) -> Accessor {
         return Parser().parse(data)
     }
     
@@ -102,9 +102,9 @@ public class XML {
      - Parameter str:String XML document
      - Returns:Accessor object to access XML document
      */
-    public class func parse(_ str: String) throws -> Accessor {
+    open class func parse(_ str: String) throws -> Accessor {
         guard let data = str.data(using: String.Encoding.utf8) else {
-            throw XML.Error.parseError
+            throw XMLError.parseError
         }
         
         return Parser().parse(data)
@@ -117,7 +117,7 @@ public class XML {
      - parameter manner:NSCharacterSet If you wannna trim Text, assign this arg
      - returns:Accessor object to access XML document
      */
-    public class func parse(_ data: Data, trimming manner: CharacterSet) -> Accessor {
+    open class func parse(_ data: Data, trimming manner: CharacterSet) -> Accessor {
         return Parser(trimming: manner).parse(data)
     }
     
@@ -128,9 +128,9 @@ public class XML {
      - parameter manner:NSCharacterSet If you wannna trim Text, assign this arg
      - Returns:Accessor object to access XML document
      */
-    public class func parse(_ str: String, trimming manner: CharacterSet) throws -> Accessor {
+    open class func parse(_ str: String, trimming manner: CharacterSet) throws -> Accessor {
         guard let data = str.data(using: String.Encoding.utf8) else {
-            throw XML.Error.parseError
+            throw XMLError.parseError
         }
         
         return Parser(trimming: manner).parse(data)

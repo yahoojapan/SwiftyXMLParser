@@ -38,7 +38,7 @@ class ParserTests: XCTestCase {
     }
     
     func testSuccessParse() {
-        guard let path = Bundle(for: self.dynamicType).pathForResource("XMLDocument", ofType: "xml"),
+        guard let path = Bundle(for: type(of: self)).path(forResource: "XMLDocument", ofType: "xml"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
@@ -55,7 +55,7 @@ class ParserTests: XCTestCase {
     }
     
     func testFailParse() {
-        guard let path = Bundle(for: self.dynamicType).pathForResource("BrokenXMLDocument", ofType: "xml"),
+        guard let path = Bundle(for: type(of: self)).path(forResource: "BrokenXMLDocument", ofType: "xml"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
@@ -70,7 +70,7 @@ class ParserTests: XCTestCase {
     }
     
     func testTextParseWithMockData() {
-        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
@@ -85,7 +85,7 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceParseWithMockData() {
-        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
@@ -100,7 +100,7 @@ class ParserTests: XCTestCase {
     }
     
     func testReturnParseWithMockData() {
-        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
@@ -115,7 +115,7 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceAndReturnParseWithMockData() {
-        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return
@@ -131,7 +131,7 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceAndReturnParseWithMockDataAndTrimmingWhitespaceAndLineBreak() {
-        guard let path = Bundle(for: self.dynamicType).pathForResource("SimpleDocument", ofType: "xml"),
+        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
                 XCTFail("fail to parse")
                 return

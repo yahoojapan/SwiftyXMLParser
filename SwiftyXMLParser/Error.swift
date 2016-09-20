@@ -24,9 +24,7 @@
 
 import Foundation
 
-extension XML {
-    public enum Error: ErrorProtocol {
-        case parseError
-        case accessError(description: String)
-    }
+public enum XMLError: Error {
+    case parseError
+    case accessError(description: String)
 }

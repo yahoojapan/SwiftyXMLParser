@@ -44,9 +44,9 @@ extension XML {
         }
         
         // MARK:- private
-        private var documentRoot = Element(name: "XML.Parser.AbstructedDocumentRoot")
-        private var stack = [Element]()
-        private let trimmingManner: CharacterSet?
+        fileprivate var documentRoot = Element(name: "XML.Parser.AbstructedDocumentRoot")
+        fileprivate var stack = [Element]()
+        fileprivate let trimmingManner: CharacterSet?
         
         func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
             let node = Element(name: elementName)
@@ -63,9 +63,9 @@ extension XML {
         
         func parser(_ parser: XMLParser, foundCharacters string: String) {
             if let text = stack.last?.text {
-                stack.last?.text = text + (string ?? "")
+                stack.last?.text = text + string
             } else {
-                stack.last?.text = "" + (string ?? "")
+                stack.last?.text = "" + string
             }
         }
         

@@ -37,7 +37,7 @@ class XMLTests: XCTestCase {
     }
 
     func testParse() {
-        if let path = Bundle(for: self.dynamicType).pathForResource("XMLDocument", ofType: "xml") {
+        if let path = Bundle(for: type(of: self)).path(forResource: "XMLDocument", ofType: "xml") {
             if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
                 let xml = XML.parse(data)
                 if  let _ = xml["ResultSet"].error {
@@ -56,7 +56,7 @@ class XMLTests: XCTestCase {
     
     
     func testSuccessParseFromString() {
-        if let path = Bundle(for: self.dynamicType).pathForResource("XMLDocument", ofType: "xml"),
+        if let path = Bundle(for: type(of: self)).path(forResource: "XMLDocument", ofType: "xml"),
             let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8),
             let xml = try? XML.parse(string) {
             if  let _ = xml["ResultSet"].error {

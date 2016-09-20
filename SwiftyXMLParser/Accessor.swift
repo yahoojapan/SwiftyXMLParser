@@ -78,7 +78,7 @@ extension XML {
          ```
          
          */
-        private subscript(index index: Int) -> Accessor {
+        fileprivate subscript(index index: Int) -> Accessor {
             let accessor: Accessor
             switch self {
             case .sequence(let elements) where index < elements.count:
@@ -118,7 +118,7 @@ extension XML {
          ```
          
          */
-        private subscript(key key: String) -> Accessor {
+        fileprivate subscript(key key: String) -> Accessor {
             let accessor: Accessor
             switch self {
             case .singleElement(let element):
@@ -430,7 +430,7 @@ extension XML {
             }
         }
         
-        private func recursivePrintAncient(_ element: Element) -> String {
+        fileprivate func recursivePrintAncient(_ element: Element) -> String {
             var description = element.name
             if let unwrappedParent = element.parentElement {
                 description = recursivePrintAncient(unwrappedParent) + " > " + description
@@ -438,8 +438,8 @@ extension XML {
             return description
         }
         
-        private func accessError(_ description: String) -> Error {
-            return Error.accessError(description: description)
+        fileprivate func accessError(_ description: String) -> Error {
+            return XMLError.accessError(description: description)
         }
     }
 }

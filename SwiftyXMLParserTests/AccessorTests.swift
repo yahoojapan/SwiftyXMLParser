@@ -369,7 +369,7 @@ class AccessorTests: XCTestCase {
         XCTAssertEqual(failureResult.count, 0, "access failure element with for-in")
     }
     
-    private func singleElement() -> XML.Element {
+    fileprivate func singleElement() -> XML.Element {
         let element = XML.Element(name: "RootElement")
         element.text = "text"
         element.attributes = ["key": "value"]
@@ -380,7 +380,7 @@ class AccessorTests: XCTestCase {
         return element
     }
     
-    private func sequence() -> [XML.Element] {
+    fileprivate func sequence() -> [XML.Element] {
         let elem1 = XML.Element(name: "Element")
         elem1.text = "text"
         elem1.attributes = ["key": "value"]
@@ -398,7 +398,7 @@ class AccessorTests: XCTestCase {
         return elements
     }
     
-    private func failure() -> XML.Error {
-        return XML.Error.accessError(description: "error")
+    fileprivate func failure() -> XMLError {
+        return XMLError.accessError(description: "error")
     }
 }
