@@ -192,14 +192,9 @@ In addition, there is the extension of Alamofire to combine with SwiftyXMLPraser
 
 * [Alamofire-SwiftyXMLParser](https://github.com/kazuhiro4949/Alamofire-SwiftyXMLParser)
 
-# Support Future Swift Versions
-
-This repository has two specific branches.
-
-+ support_swift2.3
-+ support_swift3
-
-They are supporting future swift versions. I will merge them to master branch when the versions are officialy released.
+# Swift 2.3 & 3.0 Migration Guide
+Current master branch and [the latest release package](https://github.com/yahoojapan/SwiftyXMLParser/releases/tag/3.0.0) is supporting Xcode8. You can install Swift 3.0 package in the usual process.
+If you wanna install Swift 2.3 branch, pull Swift 2.3 branch or install version [2.3.0](https://github.com/yahoojapan/SwiftyXMLParser/releases/tag/2.3.0).
 
 # License
 
