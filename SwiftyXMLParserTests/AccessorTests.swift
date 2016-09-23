@@ -47,7 +47,7 @@ class AccessorTests: XCTestCase {
         
         let target2 = singleElementAccessor[1]
         switch target2 {
-        case .Failure(_):
+        case .failure(_):
             XCTAssert(true, "access to wrong path")
         default:
             XCTFail("need to fail")
@@ -72,7 +72,7 @@ class AccessorTests: XCTestCase {
         
         let target3 = accessor[2]
         switch target3 {
-        case .Failure(_):
+        case .failure(_):
             XCTAssert(true, "Aaccess to wrong path")
         default:
             XCTFail("need to fail")
@@ -83,7 +83,7 @@ class AccessorTests: XCTestCase {
         let accessor = XML.Accessor(singleElement())
         let me = accessor["RootElement"]
         switch me {
-        case .Failure(_):
+        case .failure(_):
             XCTAssert(true, "can access corrent element")
         default:
             XCTFail("fail to get element")
@@ -94,7 +94,7 @@ class AccessorTests: XCTestCase {
         let accessor = XML.Accessor(singleElement())
         let children = accessor["ChildElement"]
         switch children {
-        case .Sequence(_):
+        case .sequence(_):
             XCTAssert(true, "can access corrent element")
         default:
             XCTFail("fail to get element")
@@ -105,7 +105,7 @@ class AccessorTests: XCTestCase {
         let accessor = XML.Accessor(sequence())
         let failureChildren = accessor["ChildElement"]
         switch failureChildren {
-        case .Failure(_):
+        case .failure(_):
             XCTAssert(true, "need to select one element from multiple elements")
         default:
             XCTFail("need to fail")
@@ -113,7 +113,7 @@ class AccessorTests: XCTestCase {
         
         let successChildren = accessor[0]["ChildElement1"]
         switch successChildren {
-        case .Sequence(_):
+        case .sequence(_):
             XCTAssert(true, "can access corrent element")
         default:
             XCTFail("fail to get element")
@@ -124,7 +124,7 @@ class AccessorTests: XCTestCase {
         let accessor = XML.Accessor(failure())
         let intIndexer = accessor[0]
         switch intIndexer {
-        case .Failure(_):
+        case .failure(_):
             XCTAssert(true, "need to return failure when access wrong path once")
         default:
             XCTFail("need to fail")
@@ -132,7 +132,7 @@ class AccessorTests: XCTestCase {
         
         let stringIndexer = accessor["ChildElement"]
         switch stringIndexer {
-        case .Failure(_):
+        case .failure(_):
             XCTAssert(true, "need to return failure when access wrong path once")
         default:
             XCTFail("need to fail")
@@ -143,7 +143,7 @@ class AccessorTests: XCTestCase {
         let accessor = XML.Accessor(sequence())
         let indexer = accessor[[0, "ChildElement1", 1]]
         switch indexer {
-        case .SingleElement(_):
+        case .singleElement(_):
             XCTAssert(true, "access element with Array")
         default:
             XCTFail("fail to get element")
@@ -151,7 +151,7 @@ class AccessorTests: XCTestCase {
         
         let failureIndexer = accessor[[1, "Hoget", "Foge"]]
         switch failureIndexer {
-        case .Failure(_):
+        case .failure(_):
             XCTAssert(true, "access wrong path with Array")
         default:
             XCTFail("need to fail")
@@ -162,7 +162,7 @@ class AccessorTests: XCTestCase {
         let accessor = XML.Accessor(sequence())
         let indexer = accessor[0, "ChildElement1", 1]
         switch indexer {
-        case .SingleElement(_):
+        case .singleElement(_):
             XCTAssert(true, "access element with Variadic")
         default:
             XCTFail("fail to get element")
@@ -170,7 +170,7 @@ class AccessorTests: XCTestCase {
         
         let failureIndexer = accessor[1, "Hoget", "Foge"]
         switch failureIndexer {
-        case .Failure(_):
+        case .failure(_):
             XCTAssert(true, "access wrong path with Variadic")
         default:
             XCTFail("need to fail")
@@ -369,7 +369,7 @@ class AccessorTests: XCTestCase {
         XCTAssertEqual(failureResult.count, 0, "access failure element with for-in")
     }
     
-    private func singleElement() -> XML.Element {
+    fileprivate func singleElement() -> XML.Element {
         let element = XML.Element(name: "RootElement")
         element.text = "text"
         element.attributes = ["key": "value"]
@@ -380,7 +380,7 @@ class AccessorTests: XCTestCase {
         return element
     }
     
-    private func sequence() -> [XML.Element] {
+    fileprivate func sequence() -> [XML.Element] {
         let elem1 = XML.Element(name: "Element")
         elem1.text = "text"
         elem1.attributes = ["key": "value"]
@@ -398,7 +398,7 @@ class AccessorTests: XCTestCase {
         return elements
     }
     
-    private func failure() -> XML.Error {
-        return XML.Error.AccessError(description: "error")
+    fileprivate func failure() -> XMLError {
+        return XMLError.accessError(description: "error")
     }
 }

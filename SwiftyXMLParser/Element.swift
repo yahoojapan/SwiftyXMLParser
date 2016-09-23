@@ -25,14 +25,14 @@
 import Foundation
 
 extension XML {
-    public class Element {
-        public var name: String
-        public var text: String?
-        public var attributes = [String: String]()
-        public var childElements = [Element]()
+    open class Element {
+        open var name: String
+        open var text: String?
+        open var attributes = [String: String]()
+        open var childElements = [Element]()
         
         // for println
-        public weak var parentElement: Element?
+        open weak var parentElement: Element?
         
         public init(name: String) {
             self.name = name
