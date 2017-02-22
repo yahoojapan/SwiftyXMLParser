@@ -34,6 +34,9 @@
 		E2B5C54D1E5D623000A84793 /* AccessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD9432E1CB220EA007D5FFC /* AccessorTests.swift */; };
 		E2B5C54E1E5D623200A84793 /* CustomOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD943301CB220F1007D5FFC /* CustomOperatorTests.swift */; };
 		E2B5C5551E5D662A00A84793 /* SwiftyXMLParser-OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B5C5531E5D660400A84793 /* SwiftyXMLParser-OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E2B5C5621E5D8C4300A84793 /* XMLDocument.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2BD943351CB2210D007D5FFC /* XMLDocument.xml */; };
+		E2B5C5631E5D8C4600A84793 /* BrokenXMLDocument.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2BD943331CB22107007D5FFC /* BrokenXMLDocument.xml */; };
+		E2B5C5641E5D8C4800A84793 /* SimpleDocument.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2B225AAE1CBCBA40002282BD /* SimpleDocument.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -345,6 +348,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2B5C5621E5D8C4300A84793 /* XMLDocument.xml in Resources */,
+				E2B5C5641E5D8C4800A84793 /* SimpleDocument.xml in Resources */,
+				E2B5C5631E5D8C4600A84793 /* BrokenXMLDocument.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
