@@ -33,9 +33,6 @@
 		E2B5C54C1E5D622E00A84793 /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD9432C1CB220E5007D5FFC /* ParserTests.swift */; };
 		E2B5C54D1E5D623000A84793 /* AccessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD9432E1CB220EA007D5FFC /* AccessorTests.swift */; };
 		E2B5C54E1E5D623200A84793 /* CustomOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD943301CB220F1007D5FFC /* CustomOperatorTests.swift */; };
-		E2B5C5501E5D64CA00A84793 /* Info-OSX.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2B5C54F1E5D64CA00A84793 /* Info-OSX.plist */; };
-		E2B5C5521E5D64F300A84793 /* Info-OSX.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2B5C5511E5D64F300A84793 /* Info-OSX.plist */; };
-		E2B5C5541E5D660400A84793 /* SwiftyXMLParser-OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B5C5531E5D660400A84793 /* SwiftyXMLParser-OSX.h */; };
 		E2B5C5551E5D662A00A84793 /* SwiftyXMLParser-OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = E2B5C5531E5D660400A84793 /* SwiftyXMLParser-OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -184,7 +181,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2B5C5541E5D660400A84793 /* SwiftyXMLParser-OSX.h in Headers */,
 				2B6D92371C7F0587000D2D06 /* SwiftyXMLParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,7 +321,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2B5C5501E5D64CA00A84793 /* Info-OSX.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +331,6 @@
 				2BD943361CB2210D007D5FFC /* XMLDocument.xml in Resources */,
 				2B225AAF1CBCBA40002282BD /* SimpleDocument.xml in Resources */,
 				2BD943341CB22107007D5FFC /* BrokenXMLDocument.xml in Resources */,
-				E2B5C5521E5D64F300A84793 /* Info-OSX.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,6 +693,7 @@
 				E2B5C53F1E5D5E9500A84793 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E2B5C5431E5D5E9500A84793 /* Build configuration list for PBXNativeTarget "SwiftyXML OSXTests" */ = {
 			isa = XCConfigurationList;
@@ -707,6 +702,7 @@
 				E2B5C5411E5D5E9500A84793 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
