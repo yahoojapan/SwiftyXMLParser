@@ -19,11 +19,12 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 
 # Requirement
 + iOS 8.0+
-+ Swift3.0+ (There are Swift 2.3 version too)
++ macOS 10.12+
++ Swift3.0+ (There are Swift 2.3 version too for iOS)
 
 # Installation
 
-### Carthage
+### Carthage (iOS, macOS)
 #### 1. create Cartfile
 
 ```ruby:Cartfile
@@ -35,7 +36,7 @@ github "https://github.com/yahoojapan/SwiftyXMLParser"
 > carthage update
 ```
 
-### CocoaPods
+### CocoaPods (iOS only)
 #### 1. create Podfile
 ```ruby:Podfile
 platform :ios, '8.0'
