@@ -4,7 +4,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
 [![License](https://img.shields.io/cocoapods/l/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
- ![Platform](https://img.shields.io/badge/platforms-iOS%208.0+%20%7C%20macOS%2010.12+%20%7C%20tvOS%209.0+-333333.svg)
+ ![Platform](https://img.shields.io/badge/platforms-iOS%208.0+%20%7C%20tvOS%209.0+-333333.svg)
 
 Simple XML Parser implemented in Swift
 
@@ -21,12 +21,11 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 # Requirement
 + iOS 8.0+
 + tvOS 9.0+
-+ macOS 10.12+
 + Swift3.0+ (There is Swift 2.3 version for iOS, too)
 
 # Installation
 
-### Carthage (iOS, macOS)
+### Carthage
 #### 1. create Cartfile
 
 ```ruby:Cartfile
@@ -38,7 +37,7 @@ github "https://github.com/yahoojapan/SwiftyXMLParser"
 > carthage update
 ```
 
-### CocoaPods (iOS, tvOS)
+### CocoaPods
 #### 1. create Podfile
 ```ruby:Podfile
 platform :ios, '8.0'
