@@ -393,10 +393,10 @@ extension XML {
         // MARK :- SequenceType
         
         public func makeIterator() -> AnyIterator<Accessor> {
-            let generator: [Element]
+            let generator: [XML.Element]
             switch self {
             case .failure(_):
-                generator = [Element]()
+                generator = []
             case .singleElement(let element):
                 generator = [element]
             case .sequence(let elements):
