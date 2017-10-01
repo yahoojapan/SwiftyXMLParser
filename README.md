@@ -1,7 +1,7 @@
 # SwiftyXMLParser
 
 ![Swift 4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg)
-![Swift 3.2](https://img.shields.io/badge/Swift-3.2+-orange.svg)
+![Swift 3.2](https://img.shields.io/badge/Swift-3.2-orange.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
 [![License](https://img.shields.io/cocoapods/l/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
