@@ -1,6 +1,7 @@
 # SwiftyXMLParser
 
-![Swift 3.0+](https://img.shields.io/badge/Swift-3.0+-orange.svg)
+![Swift 4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg)
+![Swift 3.2](https://img.shields.io/badge/Swift-3.2+-orange.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
 [![License](https://img.shields.io/cocoapods/l/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
@@ -21,7 +22,7 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 # Requirement
 + iOS 8.0+
 + tvOS 9.0+
-+ Swift3.0+ (There is Swift 2.3 version for iOS, too)
++ Swift 4.0+ (or Swift 3.2)
 
 # Installation
 
