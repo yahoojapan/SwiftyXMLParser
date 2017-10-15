@@ -1,5 +1,4 @@
-![swiftyxmlparserlogo](https://user-images.githubusercontent.com/18320004/31585796-cd74458a-b202-11e7-8967-31d32dd6e0b9.png)
-
+![swiftyxmlparser](https://user-images.githubusercontent.com/18320004/31585825-45e8fcc2-b203-11e7-9df4-44e600a52c41.png)
 
 ![Swift 4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg)
 ![Swift 3.2](https://img.shields.io/badge/Swift-3.2-orange.svg)
