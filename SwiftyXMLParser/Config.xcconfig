@@ -1,0 +1,12 @@
+// Supported Platforms
+SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator appletvos appletvsimulator
+MACOSX_DEPLOYMENT_TARGET = 10.10
+IPHONEOS_DEPLOYMENT_TARGET = 8.0
+TVOS_DEPLOYMENT_TARGET = 9.0
+
+// Targeted devices
+// 1 iPhone
+// 2 iPad
+// 3 TV
+// 4 Watch
+TARGETED_DEVICE_FAMILY = 1,2,3
