@@ -56,46 +56,87 @@ pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.gi
 # Example
 
 ```swift
-    let string = "<ResultSet><Result><Hit index=\"1\"><Name>Item1</Name></Hit><Hit index=\"2\"><Name>Item2</Name></Hit></Result></ResultSet>"
-    
-    // parse xml document
-    xml = try! XML.parse(string) 
-    
-    // access xml element
-    let accessor = xml["ResultSet"] 
+import SwiftyXMLParser
 
-    // access XML Text
-    let text = xml["ResultSet", "Result", "Hit", 0, "Name"].text {
-        print("exsists path & text in XML Element")
-    }
+let str = """
+<ResultSet>
+    <Result>
+        <Hit index=\"1\">
+            <Name>Item1</Name>
+        </Hit>
+        <Hit index=\"2\">
+            <Name>Item2</Name>
+        </Hit>
+    </Result>
+</ResultSet>
+"""
 
-    // access XML Attribute
-    let index = xml["ResultSet", "Result", "Hit"].attributes?["index"] {
-        print("exsists path & an attribute in XML Element")
-    }
+// parse xml document
+let xml = try! XML.parse(str)
 
-    // enumerate child Elements in the parent Element
-    for hit in xml["ResultSet", "Result", "Hit"] {
-        print("enumarate existing XML Elements")
-    }
+// access xml element
+let accessor = xml["ResultSet"]
 
-    // check if the XML path is wrong
-    if case .Failure(let error) =  xml["ResultSet", "Result", "TypoKey"] {
-        print(error)
-    }
+// access XML Text
+
+if let text = xml["ResultSet", "Result", "Hit", 0, "Name"].text {
+    print(text)
+}
+
+if let text = xml.ResultSet.Result.Hit[0].Name.text {
+    print(text)
+}
+
+// access XML Attribute
+if let index = xml["ResultSet", "Result", "Hit"].attributes["index"] {
+    print(index)
+}
+
+// enumerate child Elements in the parent Element
+for hit in xml["ResultSet", "Result", "Hit"] {
+    print(hit)
+}
+
+// check if the XML path is wrong
+if case .failure(let error) =  xml["ResultSet", "Result", "TypoKey"] {
+    print(error)
+}
 ```
 
 # Usage
 ### 1. Parse XML
 + from String
 ```swift
-let string = "<ResultSet><Result><Hit index=\"1\"><Name>Item1</Name></Hit><Hit index=\"2\"><Name>Item2</Name></Hit></Result></ResultSet>"
+let str = """
+<ResultSet>
+    <Result>
+        <Hit index=\"1\">
+            <Name>Item1</Name>
+        </Hit>
+        <Hit index=\"2\">
+            <Name>Item2</Name>
+        </Hit>
+    </Result>
+</ResultSet>
+"""
 
 xml = try! XML.parse(string) // -> XML.Accessor
 ```
 + from NSData
 ```swift
-let string = "<ResultSet><Result><Hit index=\"1\"><Name>Item1</Name></Hit><Hit index=\"2\"><Name>Item2</Name></Hit></Result></ResultSet>"
+let str = """
+<ResultSet>
+    <Result>
+        <Hit index=\"1\">
+            <Name>Item1</Name>
+        </Hit>
+        <Hit index=\"2\">
+            <Name>Item2</Name>
+        </Hit>
+    </Result>
+</ResultSet>
+"""
+
 let data = string.dataUsingEncoding(NSUTF8StringEncoding)
 
 xml = XML.parse(data) // -> XML.Accessor
@@ -119,6 +160,10 @@ let element = xml[path] // -> <Result><Hit index=\"1\"><Name>Item1</Name></Hit><
 + with Variadic
 ```swift
 let element = xml["ResultSet", "Result"] // -> <Result><Hit index=\"1\"><Name>Item1</Name></Hit><Hit index=\"2\"><Name>Item2</Name></Hit></Result>
+```
++ with @dynamicMemberLookup
+```swift
+let element = xml.ResultSet.Result // -> <Result><Hit index=\"1\"><Name>Item1</Name></Hit><Hit index=\"2\"><Name>Item2</Name></Hit></Result>
 ```
 ### 4. Access specific grandchild Element
 ```swift
