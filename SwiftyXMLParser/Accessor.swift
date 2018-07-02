@@ -39,6 +39,7 @@ extension XML {
      
      
     */
+    @dynamicMemberLookup
     public enum Accessor: CustomStringConvertible, Swift.Sequence {
         case singleElement(Element)
         case sequence([Element])
@@ -54,6 +55,11 @@ extension XML {
         
         public init(_ error: Error) {
             self = .failure(error)
+        }
+        
+        
+        public subscript(dynamicMember member: String) -> XML.Accessor {
+            return self[member]
         }
         
         /**
