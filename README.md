@@ -144,7 +144,7 @@ xml = XML.parse(data) // -> XML.Accessor
 
 ### 2. Access child Elements
 ```swift
-let element = xml["ResultSet"] // -> XML.Accessor
+let element = xml.ResultSet // -> XML.Accessor
 ```
 
 ### 3. Access grandchild Elements
@@ -167,18 +167,18 @@ let element = xml.ResultSet.Result // -> <Result><Hit index=\"1\"><Name>Item1</N
 ```
 ### 4. Access specific grandchild Element
 ```swift
-let element = xml["ResultSet", "Result", "Hit", 1] // -> <Hit index=\"2\"><Name>Item2</Name></Hit>
+let element = xml.ResultSet.Result.Hit[1] // -> <Hit index=\"2\"><Name>Item2</Name></Hit>
 ```
 ### 5. Access attribute in Element
 ```swift
-if let attributeValue = xml["ResultSet", "Result", "Hit", 1].attributes?["index"] {
+if let attributeValue = xml.ResultSet.Result.Hit[1].attributes?["index"] {
   print(attributeValue) // -> 2
 }
 ```
 ### 6. Access text in Element
 + with optional binding
 ```swift
-if let text = xml["ResultSet", "Result", "Hit", 1, "Name"].text {
+if let text = xml.ResultSet.Result.Hit[1].Name.text {
     print(text) // -> Item2
 } 
 ```
@@ -188,7 +188,7 @@ struct Entity {
   var name = ""
 }
 let entity = Entity()
-entity.name ?= xml["ResultSet", "Result", "Hit", 1, "Name"].text // assign if it has text
+entity.name ?= xml.ResultSet.Result.Hit[1].Name.text // assign if it has text
 ```
 + convert Int and assign
 ```swift
@@ -196,7 +196,7 @@ struct Entity {
   var name: Int = 0
 }
 let entity = Entity()
-entity.name ?= xml["ResultSet", "Result", "Hit", 1, "Name"].int // assign if it has Int
+entity.name ?= xml.ResultSet.Result.Hit[1].Name.int // assign if it has Int
 ```
 and there are other syntax sugers, bool, url and double.
 + assign text into Array
@@ -205,23 +205,23 @@ struct Entity {
   var names = [String]()
 }
 let entity = Entity()
-entity.names ?<< xml["ResultSet", "Result", "Hit", 1, "Name"].text // assign if it has text
+entity.names ?<< xml.ResultSet.Result.Hit[1].Name.text // assign if it has text
 ```
 ### Check error
 ```swift
-print(xml["ResultSet", "Result", "TypoKey"]) // -> "TypoKey not found."
+print(xml.ResultSet.Result.TypoKey) // -> "TypoKey not found."
 ```
 
 ### Access as SequenceType
 + for-in
 ```swift
-for element in xml["ResultSet", "Result", "Hit"] {
+for element in xml.ResultSet.Result.Hit {
   print(element.text)
 }
 ```
 + map
 ```swift
-xml["ResultSet", "Result", "Hit"].map { $0["Name"].text }
+xml.ResultSet.Result.Hit.map { $0.Name.text }
 ```
 
 ## Work with Alamofire
@@ -235,7 +235,7 @@ Alamofire.request(.GET, "https://itunes.apple.com/us/rss/topgrossingapplications
          .responseData { response in
             if let data = response.data {
                 let xml = XML.parse(data)
-                print(xml["feed", "entry", 0, "title"].text) // outputs the top title of iTunes app raning.
+                print(xml.feed.entry[0].title.text) // outputs the top title of iTunes app raning.
             }
         }
 ```
