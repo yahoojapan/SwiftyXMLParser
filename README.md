@@ -1,7 +1,6 @@
 ![swiftyxmlparserlogo](https://user-images.githubusercontent.com/18320004/31585849-abf82a6a-b203-11e7-9494-007cebd29aa6.png)
 
-![Swift 4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg)
-![Swift 3.2](https://img.shields.io/badge/Swift-3.2-orange.svg)
+![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
 [![License](https://img.shields.io/cocoapods/l/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
