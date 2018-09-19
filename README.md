@@ -245,7 +245,7 @@ In addition, there is the extension of Alamofire to combine with SwiftyXMLPraser
 * [Alamofire-SwiftyXMLParser](https://github.com/kazuhiro4949/Alamofire-SwiftyXMLParser)
 
 # Migration Guide
-[Current master branch](https://github.com/yahoojapan/SwiftyXMLParser/tree/master) is supporting Xcode9.
+[Current master branch](https://github.com/yahoojapan/SwiftyXMLParser/tree/master) is supporting Xcode10.
 If you wanna use this library with legacy swift version, read [release notes](https://github.com/yahoojapan/SwiftyXMLParser/releases) and install the last compatible version.
 
 # License
