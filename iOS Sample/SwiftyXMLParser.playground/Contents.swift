@@ -25,6 +25,9 @@ if let text = xml["ResultSet", "Result", "Hit", 0, "Name"].text {
     print(text)
 }
 
+let texts = xml["ResultSet", "Result", "Hit"].compactMap({ $0.Name.text })
+print(texts)
+
 if let text = xml.ResultSet.Result.Hit[0].Name.text {
     print(text)
 }

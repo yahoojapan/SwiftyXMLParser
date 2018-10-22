@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  iOS Sample
 //
-//  Created by Kazuhiro Hayashi on 2018/07/02.
-//  Copyright © 2018年 Kazuhiro Hayashi. All rights reserved.
+//  Created by kahayash on 2018/10/22.
+//  Copyright © 2018 Yahoo Japan Corporation. All rights reserved.
 //
 
 import UIKit
