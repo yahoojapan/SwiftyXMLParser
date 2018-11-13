@@ -26,6 +26,11 @@ import Foundation
 
 extension XML {
     class Parser: NSObject, XMLParserDelegate {
+        /// If it has value, Parser is interuppted by error. (e.g. using invalid character)
+        /// So the result of parsing is missing.
+        /// See https://developer.apple.com/documentation/foundation/xmlparser/errorcode
+        private(set) var error: Error?
+        
         func parse(_ data: Data) -> Accessor {
             stack = [Element]()
             stack.append(documentRoot)
@@ -74,6 +79,10 @@ extension XML {
                 stack.last?.text = stack.last?.text?.trimmingCharacters(in: trimmingManner)
             }
             stack.removeLast()
+        }
+        
+        func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+            error = parseError
         }
     }
 }
