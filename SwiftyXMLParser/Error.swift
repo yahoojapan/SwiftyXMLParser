@@ -25,6 +25,6 @@
 import Foundation
 
 public enum XMLError: Error {
-    case parseError
+    case failToEncodeString
     case accessError(description: String)
 }
