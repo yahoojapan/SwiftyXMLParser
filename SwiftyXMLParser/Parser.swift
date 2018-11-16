@@ -29,7 +29,7 @@ extension XML {
         /// If it has value, Parser is interuppted by error. (e.g. using invalid character)
         /// So the result of parsing is missing.
         /// See https://developer.apple.com/documentation/foundation/xmlparser/errorcode
-        private(set) var error: Error?
+        private(set) var error: XMLError?
         
         func parse(_ data: Data) -> Accessor {
             stack = [Element]()
@@ -37,7 +37,11 @@ extension XML {
             let parser = XMLParser(data: data)
             parser.delegate = self
             parser.parse()
-            return Accessor(documentRoot)
+            if let error = error {
+                return Accessor(error)
+            } else {
+                return Accessor(documentRoot)
+            }
         }
         
         override init() {
@@ -82,7 +86,7 @@ extension XML {
         }
         
         func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-            error = parseError
+            error = .intrupptedParseError(rawError: parseError)
         }
     }
 }
