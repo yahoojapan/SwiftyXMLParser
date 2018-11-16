@@ -61,10 +61,10 @@ class ParserTests: XCTestCase {
         }
         
         let xml = XML.Parser().parse(data)
-        if let _ = xml["ResultSet"].error {
-            XCTFail("fail to parse")
+        if case .failure(XMLError.intrupptedParseError) = xml {
+            XCTAssert(true, "Parsed Failure because of the invalid character")
         } else {
-            XCTAssert(true, "success to parse")
+            XCTAssert(false, "fail")
         }
     }
     
@@ -142,5 +142,22 @@ class ParserTests: XCTestCase {
         } else {
             XCTAssert(false, "fail")
         }
-    }    
+    }
+    
+    func testParseErrorToInvalidCharacter() {
+        let str = "<xmlopening>@ß123\u{1c}</xmlopening>"
+        let xml = XML.Parser().parse(str.data(using: .utf8)!)
+        
+        if case .failure(XMLError.intrupptedParseError) = xml {
+            XCTAssert(true, "Parsed Failure because of the invalid character")
+        } else {
+            XCTAssert(false, "fail")
+        }
+    }
+    
+    func testNotParseErrorToInvalidCharacter() {
+        let str = "<xmlopening>@ß123\u{1c}</xmlopening>".addingPercentEncoding(withAllowedCharacters: CharacterSet.controlCharacters.inverted)!
+        let xml = XML.Parser().parse(str.data(using: .utf8)!)
+        XCTAssertEqual("@ß123\u{1c}", xml["xmlopening"].text?.removingPercentEncoding, "Parsed Success and trim them")
+    }
 }
