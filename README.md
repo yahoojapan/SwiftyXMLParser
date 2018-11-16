@@ -119,7 +119,7 @@ let str = """
 </ResultSet>
 """
 
-xml = try! XML.parse(string) // -> XML.Accessor
+xml = try! XML.parse(str) // -> XML.Accessor
 ```
 + from NSData
 ```swift
@@ -136,10 +136,26 @@ let str = """
 </ResultSet>
 """
 
-let data = string.dataUsingEncoding(NSUTF8StringEncoding)
+let data = str.data(using: .utf8)
 
 xml = XML.parse(data) // -> XML.Accessor
 ```
+
++ with invalid character
+
+```swift
+let srt = "<xmlopening>@ß123\u{1c}</xmlopening>"
+
+let xml = XML.parse(str.data(using: .utf8))
+
+if case .failure(XMLError.intrupptedParseError) = xml {
+  print("invalid character")
+}
+
+```
+
+For more, see https://developer.apple.com/documentation/foundation/xmlparser/errorcode 
+
 
 ### 2. Access child Elements
 ```swift
