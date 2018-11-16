@@ -70,7 +70,7 @@ class XMLTests: XCTestCase {
     
     
     func testSuccessParseFromDoublebyteSpace() {
-        guard let xml = try? XML.parse("<Name>　<Name>") else {
+        guard let xml = try? XML.parse("<Name>　</Name>") else {
             XCTFail("Fail Prase")
             return
         }
