@@ -222,6 +222,10 @@ struct Entity {
 let entity = Entity()
 entity.names ?<< xml.ResultSet.Result.Hit[1].Name.text // assign if it has text
 ```
+### 7. Count child Elements
+```swift
+let numberOfHits = xml.ResultSet.Result.Hit.all?.count 
+```
 ### Check error
 ```swift
 print(xml.ResultSet.Result.TypoKey) // -> "TypoKey not found."
