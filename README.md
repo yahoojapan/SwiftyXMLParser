@@ -87,7 +87,7 @@ if let text = xml.ResultSet.Result.Hit[0].Name.text {
 }
 
 // access XML Attribute
-if let index = xml["ResultSet", "Result", "Hit"].attributes["index"] {
+if let index = xml["ResultSet", "Result", "Hit", 0].attributes["index"] {
     print(index)
 }
 
