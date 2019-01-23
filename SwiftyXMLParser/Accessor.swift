@@ -396,7 +396,7 @@ extension XML {
             }
         }
 
-        // MARK :- SequenceType
+        // MARK: - SequenceType
         
         public func makeIterator() -> AnyIterator<Accessor> {
             let generator: [XML.Element]

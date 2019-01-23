@@ -37,7 +37,7 @@ class CustomOperatorTests: XCTestCase {
         super.tearDown()
     }
 
-    // MAKR:- ?=のテスト
+    // MARK: - ?=のテスト
     func testFailableAssignment() {
         let optionalSome: Int? = 1
         var targetSome: Int = 0
