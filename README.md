@@ -148,7 +148,7 @@ let srt = "<xmlopening>@ß123\u{1c}</xmlopening>"
 
 let xml = XML.parse(str.data(using: .utf8))
 
-if case .failure(XMLError.intrupptedParseError) = xml {
+if case .failure(XMLError.interruptedParseError) = xml {
   print("invalid character")
 }
 
@@ -259,7 +259,7 @@ Alamofire.request(.GET, "https://itunes.apple.com/us/rss/topgrossingapplications
         }
 ```
 
-In addition, there is the extension of Alamofire to combine with SwiftyXMLPraser. 
+In addition, there is the extension of Alamofire to combine with SwiftyXMLParser. 
 
 * [Alamofire-SwiftyXMLParser](https://github.com/kazuhiro4949/Alamofire-SwiftyXMLParser)
 
