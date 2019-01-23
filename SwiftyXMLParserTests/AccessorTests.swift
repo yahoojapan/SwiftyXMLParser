@@ -332,15 +332,15 @@ class AccessorTests: XCTestCase {
     
     func testFlatMap() {
         let accessor = XML.Accessor(singleElement())
-        let singleText = accessor.flatMap { $0.text }
+        let singleText = accessor.compactMap { $0.text }
         XCTAssertEqual(singleText, ["text"], "can access text")
         
         let sequenceAccessor = XML.Accessor(sequence())
-        let texts = sequenceAccessor.flatMap { $0.text }
+        let texts = sequenceAccessor.compactMap { $0.text }
         XCTAssertEqual(texts, ["text", "text2"], "can access each text")
         
         let failureAccessor = XML.Accessor(failure())
-        let failureTexts = failureAccessor.flatMap { $0.text }
+        let failureTexts = failureAccessor.compactMap { $0.text }
         XCTAssertEqual(failureTexts, [], "has no text")
     }
     
