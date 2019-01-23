@@ -449,3 +449,33 @@ extension XML {
         }
     }
 }
+
+extension XML {
+    public class Converter {
+        let accessor: XML.Accessor
+        
+        init(_ accessor: XML.Accessor) {
+            self.accessor = accessor
+        }
+        
+        func makeDocument() throws -> String {
+            if case .failure(let err) = accessor {
+                throw err
+            }
+            
+            let doc: String = ""
+            for hit in accessor {
+                switch hit {
+                case .singleElement(let element):
+                    break
+                case .sequence(let elements):
+                    break
+                case .failure(let error):
+                    break
+                }
+            }
+            
+            return ""
+        }
+    }
+}
