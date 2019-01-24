@@ -71,14 +71,14 @@ class XMLTests: XCTestCase {
     
     func testSuccessParseFromDoublebyteSpace() {
         guard let xml = try? XML.parse("<Name>　</Name>") else {
-            XCTFail("Fail Prase")
+            XCTFail("Fail Parse")
             return
         }
         
         if  let name = xml["Name"].text {
             XCTAssertEqual(name, "　", "Parse Success Double-byte Space")
         } else {
-            XCTFail("Fail Prase")
+            XCTFail("Fail Parse")
         }
     }
 

@@ -86,7 +86,7 @@ extension XML {
         }
         
         func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-            error = .intrupptedParseError(rawError: parseError)
+            error = .interruptedParseError(rawError: parseError)
         }
     }
 }

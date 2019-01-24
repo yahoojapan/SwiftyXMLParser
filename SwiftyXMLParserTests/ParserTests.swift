@@ -61,7 +61,7 @@ class ParserTests: XCTestCase {
         }
         
         let xml = XML.Parser().parse(data)
-        if case .failure(XMLError.intrupptedParseError) = xml {
+        if case .failure(XMLError.interruptedParseError) = xml {
             XCTAssert(true, "Parsed Failure because of the invalid character")
         } else {
             XCTAssert(false, "fail")
@@ -148,7 +148,7 @@ class ParserTests: XCTestCase {
         let str = "<xmlopening>@ß123\u{1c}</xmlopening>"
         let xml = XML.Parser().parse(str.data(using: .utf8)!)
         
-        if case .failure(XMLError.intrupptedParseError) = xml {
+        if case .failure(XMLError.interruptedParseError) = xml {
             XCTAssert(true, "Parsed Failure because of the invalid character")
         } else {
             XCTAssert(false, "fail")
