@@ -463,19 +463,36 @@ extension XML {
                 throw err
             }
             
-            let doc: String = ""
+            var doc: String = ""
             for hit in accessor {
                 switch hit {
                 case .singleElement(let element):
-                    break
+                    doc += "\n" + traverse(element)
                 case .sequence(let elements):
-                    break
+                    doc += "\n" + elements.reduce("") { (sum, el) in sum + "\n" + traverse(el) }
                 case .failure(let error):
-                    break
+                    throw error
                 }
             }
             
-            return ""
+            return doc
+        }
+        
+        private func traverse(_ element: Element) -> String {
+            let name = element.name
+            let text = element.text ?? ""
+            let attrs = element.attributes.map { (k, v) in "\(k)=\"\(v)\""  }.joined(separator: " ")
+            
+            let childDocs = element.childElements.reduce("", { (result, element) in
+                result + "\n" + traverse(element)
+            })
+            
+            return """
+                <\(name) \(attrs)>
+                    \(text)
+                    \(childDocs)
+                </\(name)>
+            """
         }
     }
 }
