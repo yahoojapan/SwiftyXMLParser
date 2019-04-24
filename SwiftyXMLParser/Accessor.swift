@@ -462,8 +462,8 @@ extension XML {
             if case .failure(let err) = accessor {
                 throw err
             }
-            
-            var doc: String = ""
+
+            var doc: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             for hit in accessor {
                 switch hit {
                 case .singleElement(let element):
@@ -474,25 +474,29 @@ extension XML {
                     throw error
                 }
             }
-            
+
             return doc
         }
-        
+
         private func traverse(_ element: Element) -> String {
             let name = element.name
             let text = element.text ?? ""
             let attrs = element.attributes.map { (k, v) in "\(k)=\"\(v)\""  }.joined(separator: " ")
-            
+
             let childDocs = element.childElements.reduce("", { (result, element) in
                 result + "\n" + traverse(element)
             })
-            
-            return """
+
+            if name == "XML.Parser.AbstructedDocumentRoot" {
+                return childDocs
+            } else {
+                return """
                 <\(name) \(attrs)>
-                    \(text)
-                    \(childDocs)
+                \(text)
+                \(childDocs)
                 </\(name)>
-            """
+                """
+            }
         }
     }
 }
