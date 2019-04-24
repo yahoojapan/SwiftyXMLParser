@@ -453,12 +453,12 @@ extension XML {
 extension XML {
     public class Converter {
         let accessor: XML.Accessor
-        
-        init(_ accessor: XML.Accessor) {
+
+        public init(_ accessor: XML.Accessor) {
             self.accessor = accessor
         }
-        
-        func makeDocument() throws -> String {
+
+        public func makeDocument() throws -> String {
             if case .failure(let err) = accessor {
                 throw err
             }
