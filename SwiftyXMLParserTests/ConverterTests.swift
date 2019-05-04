@@ -23,38 +23,115 @@
  */
 
 import XCTest
-@testable import SwiftyXMLParser
+import SwiftyXMLParser
 
 class ConverterTests: XCTestCase {
-
-    override func setUp() {
-    }
-
-    override func tearDown() {
-    }
-    
     func testMakeDosument() {
-        let childElements = [XML.Element(name: "child_name",
-                                         text: "child_text",
-                                         attributes: ["child_key": "child_value"])]
-        let element = XML.Element(name: "name",
-                                  text: "text",
-                                  attributes: ["key": "value"],
-                                  childElements: childElements)
-        let converter = XML.Converter(XML.Accessor(element))
-        guard let result = try? converter.makeDocument() else {
-            XCTFail("fail to make document")
-            return
+        // no chiled element, text only
+        do {
+            let element = XML.Element(name: "name",
+                                      text: "text",
+                                      attributes: ["key": "value"])
+            let converter = XML.Converter(XML.Accessor(element))
+            
+            guard let result = try? converter.makeDocument() else {
+                XCTFail("fail to make document")
+                return
+            }
+            let extpected = """
+        <name key="value">text</name>
+        """
+            XCTAssertEqual(result, extpected)
         }
-        let extpected = """
+        
+        // no text, chiled elements only
+        do {
+            let childElements = [
+                XML.Element(name: "c_name1", text: "c_text1", attributes: ["c_key1": "c_value1"]),
+                XML.Element(name: "c_name2", text: "c_text2", attributes: ["c_key2": "c_value2"])
+            ]
+            let element = XML.Element(name: "name",
+                                      text: nil,
+                                      attributes: ["key": "value"],
+                                      childElements: childElements)
+            
+            let converter = XML.Converter(XML.Accessor(element))
+            guard let result = try? converter.makeDocument() else {
+                XCTFail("fail to make document")
+                return
+            }
+            let extpected = """
         <name key="value">
-            text
-            <child_name child_key="child_value">
-                child_text
-            </child_name>
+            <c_name1 c_key1="c_value1">c_text1</c_name1>
+            <c_name2 c_key2="c_value2">c_text2</c_name2>
         </name>
         """
-        XCTAssertEqual(result, extpected)
+            XCTAssertEqual(result, extpected)
+        }
+        
+        // both text and chiled element
+        do {
+            let childElements = [
+                XML.Element(name: "c_name1", text: "c_text1", attributes: ["c_key1": "c_value1"]),
+                XML.Element(name: "c_name2", text: "c_text2", attributes: ["c_key2": "c_value2"])
+            ]
+            let element = XML.Element(name: "name",
+                                      text: "text",
+                                      attributes: ["key": "value"],
+                                      childElements: childElements)
+            let converter = XML.Converter(XML.Accessor(element))
+            guard let result = try? converter.makeDocument() else {
+                XCTFail("fail to make document")
+                return
+            }
+            let extpected = """
+        <name key="value">
+            text
+            <c_name1 c_key1="c_value1">c_text1</c_name1>
+            <c_name2 c_key2="c_value2">c_text2</c_name2>
+        </name>
+        """
+            XCTAssertEqual(result, extpected)
+        }
+        
+        // nested child elements
+        do {
+            let grateGrandchildElements = [
+                XML.Element(name: "ggc_name1", text: "ggc_text1", attributes: ["ggc_key1": "ggc_value1"])
+            ]
+            
+            let grandchildElements = [
+                XML.Element(name: "gc_name1", text: "gc_text1", attributes: ["gc_key1": "gc_value1"], childElements: grateGrandchildElements)
+            ]
+            
+            let childElements = [
+                XML.Element(name: "c_name1", text: "c_text1", attributes: ["c_key1": "c_value1"]),
+                XML.Element(name: "c_name2", text: "c_text2", attributes: ["c_key2": "c_value2"], childElements: grandchildElements)
+            ]
+            let element = XML.Element(name: "name",
+                                      text: "text",
+                                      attributes: ["key": "value"],
+                                      childElements: childElements)
+            let converter = XML.Converter(XML.Accessor(element))
+            guard let result = try? converter.makeDocument() else {
+                XCTFail("fail to make document")
+                return
+            }
+            let extpected = """
+        <name key="value">
+            text
+            <c_name1 c_key1="c_value1">c_text1</c_name1>
+            <c_name2 c_key1="c_value2">
+                c_text2
+                <gc_name1 gc_key="gc_value1">
+                    gc_text1
+                    <ggc_name1 ggc_key1="ggc_value1">ggc_text1</ggc_name1>
+                </gc_name1>
+            </c_name2>
+        </name>
+        """
+            XCTAssertEqual(result, extpected)
+        }
     }
 }
 
