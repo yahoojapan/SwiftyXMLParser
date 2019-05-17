@@ -21,7 +21,7 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 # Requirement
 + iOS 8.0+
 + tvOS 9.0+
-+ macOs 10.10+
++ macOS 10.10+
 + Swift 5.0
 
 # Installation
