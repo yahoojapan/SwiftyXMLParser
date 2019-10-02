@@ -39,9 +39,9 @@ let package = Package(
             path: "Source"
         ),
         .testTarget(
-            name: "SwiftyXMLParserTests",
-            path: "Tests",   
-            dependencies: ["SwiftyXMLParser"]
+            name: "SwiftyXMLParserTests",  
+            dependencies: ["SwiftyXMLParser"],
+            path: "Tests"            
         )
     ]
 )
