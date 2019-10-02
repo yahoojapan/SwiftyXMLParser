@@ -451,13 +451,28 @@ extension XML {
 }
 
 extension XML {
+    /// Conveter to make xml document from Accessor.
     public class Converter {
         let accessor: XML.Accessor
 
         public init(_ accessor: XML.Accessor) {
             self.accessor = accessor
         }
-
+        
+        /**
+         If Accessor object has correct XML path, return the XML element, otherwith return error
+         
+         example:
+         
+         ```
+         let xml = try! XML.parse("<?xml version="1.0" encoding="UTF-8"?><doc><name key="value">text</name></doc>")
+         let elem = xml["doc"]
+         
+         print(Converter(elem).makeDocument())
+         // => <?xml version="1.0" encoding="UTF-8"?><name key="value">text</name>
+         ```
+         
+         */
         public func makeDocument() throws -> String {
             if case .failure(let err) = accessor {
                 throw err
