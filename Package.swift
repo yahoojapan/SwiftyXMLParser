@@ -40,6 +40,7 @@ let package = Package(
         ),
         .testTarget(
             name: "SwiftyXMLParserTests",
+            path: "Tests",   
             dependencies: ["SwiftyXMLParser"]
         )
     ]
