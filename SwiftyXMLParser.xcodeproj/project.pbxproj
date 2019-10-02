@@ -22,6 +22,7 @@
 		2BD943341CB22107007D5FFC /* BrokenXMLDocument.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2BD943331CB22107007D5FFC /* BrokenXMLDocument.xml */; };
 		2BD943361CB2210D007D5FFC /* XMLDocument.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2BD943351CB2210D007D5FFC /* XMLDocument.xml */; };
 		2BD943381CB23CFE007D5FFC /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD943371CB23CFE007D5FFC /* Error.swift */; };
+		974D50012243BB0E0015B768 /* ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974D50002243BB0E0015B768 /* ConverterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		2BD943351CB2210D007D5FFC /* XMLDocument.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = XMLDocument.xml; sourceTree = "<group>"; };
 		2BD943371CB23CFE007D5FFC /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		81B640ED1FC77E6400BE1AB5 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		974D50002243BB0E0015B768 /* ConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				2BD943321CB220FA007D5FFC /* Fixture */,
 				2B6D92421C7F0587000D2D06 /* SwiftyXMLParserTests.swift */,
 				2BD9432A1CB220E0007D5FFC /* XMLTests.swift */,
+				974D50002243BB0E0015B768 /* ConverterTests.swift */,
 				2BD9432C1CB220E5007D5FFC /* ParserTests.swift */,
 				2BD9432E1CB220EA007D5FFC /* AccessorTests.swift */,
 				2BD943301CB220F1007D5FFC /* CustomOperatorTests.swift */,
@@ -258,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				974D50012243BB0E0015B768 /* ConverterTests.swift in Sources */,
 				2BD943311CB220F1007D5FFC /* CustomOperatorTests.swift in Sources */,
 				2BD9432F1CB220EA007D5FFC /* AccessorTests.swift in Sources */,
 				2B6D92431C7F0587000D2D06 /* SwiftyXMLParserTests.swift in Sources */,
