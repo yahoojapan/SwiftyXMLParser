@@ -78,8 +78,8 @@
 		2B6D92291C7F0587000D2D06 = {
 			isa = PBXGroup;
 			children = (
-				2B6D92351C7F0587000D2D06 /* SwiftyXMLParser */,
-				2B6D92411C7F0587000D2D06 /* SwiftyXMLParserTests */,
+				2B6D92351C7F0587000D2D06 /* Source */,
+				2B6D92411C7F0587000D2D06 /* Tests */,
 				2B6D92341C7F0587000D2D06 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -93,7 +93,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2B6D92351C7F0587000D2D06 /* SwiftyXMLParser */ = {
+		2B6D92351C7F0587000D2D06 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				2B6D92361C7F0587000D2D06 /* SwiftyXMLParser.h */,
@@ -105,10 +105,10 @@
 				2B6D92381C7F0587000D2D06 /* Info.plist */,
 				81B640ED1FC77E6400BE1AB5 /* Config.xcconfig */,
 			);
-			path = SwiftyXMLParser;
+			path = Source;
 			sourceTree = "<group>";
 		};
-		2B6D92411C7F0587000D2D06 /* SwiftyXMLParserTests */ = {
+		2B6D92411C7F0587000D2D06 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				2BD943321CB220FA007D5FFC /* Fixture */,
@@ -119,7 +119,7 @@
 				2BD943301CB220F1007D5FFC /* CustomOperatorTests.swift */,
 				2B6D92441C7F0587000D2D06 /* Info.plist */,
 			);
-			path = SwiftyXMLParserTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		2BD943321CB220FA007D5FFC /* Fixture */ = {
