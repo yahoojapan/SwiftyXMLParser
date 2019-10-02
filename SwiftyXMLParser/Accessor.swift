@@ -466,7 +466,7 @@ extension XML {
          
          ```
          let xml = try! XML.parse("<?xml version="1.0" encoding="UTF-8"?><doc><name key="value">text</name></doc>")
-         let elem = xml["doc"]
+         let elem = xml.doc
          
          print(Converter(elem).makeDocument())
          // => <?xml version="1.0" encoding="UTF-8"?><name key="value">text</name>
