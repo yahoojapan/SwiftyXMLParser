@@ -39,7 +39,7 @@ class ConverterTests: XCTestCase {
                 return
             }
             let extpected = """
-        <name key="value">text</name>
+        <?xml version="1.0" encoding="UTF-8"?><name key="value">text</name>
         """
             XCTAssertEqual(result, extpected)
         }
@@ -61,10 +61,7 @@ class ConverterTests: XCTestCase {
                 return
             }
             let extpected = """
-        <name key="value">
-            <c_name1 c_key1="c_value1">c_text1</c_name1>
-            <c_name2 c_key2="c_value2">c_text2</c_name2>
-        </name>
+        <?xml version="1.0" encoding="UTF-8"?><name key="value"><c_name1 c_key1="c_value1">c_text1</c_name1><c_name2 c_key2="c_value2">c_text2</c_name2></name>
         """
             XCTAssertEqual(result, extpected)
         }
@@ -85,11 +82,7 @@ class ConverterTests: XCTestCase {
                 return
             }
             let extpected = """
-        <name key="value">
-            text
-            <c_name1 c_key1="c_value1">c_text1</c_name1>
-            <c_name2 c_key2="c_value2">c_text2</c_name2>
-        </name>
+        <?xml version="1.0" encoding="UTF-8"?><name key="value">text<c_name1 c_key1="c_value1">c_text1</c_name1><c_name2 c_key2="c_value2">c_text2</c_name2></name>
         """
             XCTAssertEqual(result, extpected)
         }
@@ -118,17 +111,7 @@ class ConverterTests: XCTestCase {
                 return
             }
             let extpected = """
-        <name key="value">
-            text
-            <c_name1 c_key1="c_value1">c_text1</c_name1>
-            <c_name2 c_key1="c_value2">
-                c_text2
-                <gc_name1 gc_key="gc_value1">
-                    gc_text1
-                    <ggc_name1 ggc_key1="ggc_value1">ggc_text1</ggc_name1>
-                </gc_name1>
-            </c_name2>
-        </name>
+        <?xml version="1.0" encoding="UTF-8"?><name key="value">text<c_name1 c_key1="c_value1">c_text1</c_name1><c_name2 c_key2="c_value2">c_text2<gc_name1 gc_key1="gc_value1">gc_text1<ggc_name1 ggc_key1="ggc_value1">ggc_text1</ggc_name1></gc_name1></c_name2></name>
         """
             XCTAssertEqual(result, extpected)
         }

@@ -467,9 +467,9 @@ extension XML {
             for hit in accessor {
                 switch hit {
                 case .singleElement(let element):
-                    doc += "\n" + traverse(element)
+                    doc += traverse(element)
                 case .sequence(let elements):
-                    doc += "\n" + elements.reduce("") { (sum, el) in sum + "\n" + traverse(el) }
+                    doc += elements.reduce("") { (sum, el) in sum + traverse(el) }
                 case .failure(let error):
                     throw error
                 }
@@ -484,18 +484,13 @@ extension XML {
             let attrs = element.attributes.map { (k, v) in "\(k)=\"\(v)\""  }.joined(separator: " ")
 
             let childDocs = element.childElements.reduce("", { (result, element) in
-                result + "\n" + traverse(element)
+                result + traverse(element)
             })
 
             if name == "XML.Parser.AbstructedDocumentRoot" {
                 return childDocs
             } else {
-                return """
-                <\(name) \(attrs)>
-                \(text)
-                \(childDocs)
-                </\(name)>
-                """
+                return "<\(name) \(attrs)>\(text)\(childDocs)</\(name)>"
             }
         }
     }
