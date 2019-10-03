@@ -26,6 +26,14 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 
 # Installation
 
+### Swift Package Manager
+
+From Xcode 11, you can use Swift Package Manager to add SwiftyXMLParser to your project.
+
+1. Select File > Swift Packages > Add Package Dependency. Enter https://github.com/rubengarciam/SwiftyXMLParser.git in the "Choose Package Repository" dialog.
+2. In the next page, specify the version resolving rule as "Up to Next Major" with "5.0.1" as its earliest version.
+3. After Xcode checking out the source and resolving the version, you can choose the "SwiftyXMLParser" library and add it to your app target.
+
 ### Carthage
 #### 1. create Cartfile
 
