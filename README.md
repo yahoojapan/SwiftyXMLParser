@@ -136,7 +136,7 @@ let str = """
 </ResultSet>
 """
 
-let data = str.data(using: .utf8)
+let string = String(decoding: data, as: UTF8.self)
 
 xml = XML.parse(data) // -> XML.Accessor
 ```
