@@ -1,7 +1,7 @@
 // Supported Platforms
 SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator appletvos appletvsimulator
 MACOSX_DEPLOYMENT_TARGET = 10.10
-IPHONEOS_DEPLOYMENT_TARGET = 8.0
+IPHONEOS_DEPLOYMENT_TARGET = 9.0
 TVOS_DEPLOYMENT_TARGET = 9.0
 
 // Targeted devices
