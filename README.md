@@ -4,7 +4,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
 [![License](https://img.shields.io/cocoapods/l/SwiftyXMLParser.svg?style=flat)](http://cocoapods.org/pods/SwiftyXMLParser)
- ![Platform](https://img.shields.io/badge/platforms-iOS%208.0+%20%7C%20macOS%2010.10+%20%7C%20tvOS%209.0+-333333.svg)
+ ![Platform](https://img.shields.io/badge/platforms-iOS%209.0+%20%7C%20macOS%2010.10+%20%7C%20tvOS%209.0+-333333.svg)
 
 Simple XML Parser implemented in Swift
 
@@ -19,7 +19,7 @@ This is a XML parser inspired by [SwiftyJSON](https://github.com/SwiftyJSON/Swif
 - [x] easy debugging XML pathes.
 
 # Requirement
-+ iOS 8.0+
++ iOS 9.0+
 + tvOS 9.0+
 + macOS 10.10+
 + Swift 5.0
@@ -41,7 +41,7 @@ github "https://github.com/yahoojapan/SwiftyXMLParser"
 ### CocoaPods
 #### 1. create Podfile
 ```ruby:Podfile
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
