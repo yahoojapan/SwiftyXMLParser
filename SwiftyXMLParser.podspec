@@ -19,6 +19,8 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = "10.10"
   s.watchos.deployment_target = '6.0'
 
+  s.swift_version = '5.0'
+
   s.source_files = "SwiftyXMLParser/*.swift"
   s.requires_arc = true
 
