@@ -221,6 +221,56 @@ class AccessorTests: XCTestCase {
             XCTAssert(true, "fail to access name with Failure Accessor")
         }
     }
+
+    func testSetText() throws {
+        var accessor = XML.Accessor(singleElement())
+        accessor.text = "text2"
+        XCTAssertEqual(accessor.text, "text2", "set text on first single element")
+
+        var element = accessor["ChildElement"].first
+        element.text = "childText1"
+        XCTAssertEqual(element.text, "childText1", "set text for first child element")
+
+        element = accessor["ChildElement"].last
+        element.text = "childText2"
+        XCTAssertEqual(element.text, "childText2", "set text for last child element")
+
+        XCTAssertEqual(
+            try XML.document(accessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"value\">text2<ChildElement >childText1</ChildElement><ChildElement >childText2</ChildElement></RootElement>",
+            "end document has newly added texts"
+        )
+
+        var sequenceAccessor = XML.Accessor(sequence())
+        sequenceAccessor.text = "text"
+        XCTAssertEqual(sequenceAccessor.text, nil, "cannot set text on sequence")
+
+        var accessorElement = sequenceAccessor.first
+        accessorElement.text = "newText"
+        XCTAssertEqual(accessorElement.text, "newText", "set text for first element in sequence")
+
+        accessorElement = sequenceAccessor.last
+        accessorElement.text = "newText2"
+        XCTAssertEqual(accessorElement.text, "newText2", "set text for last element in sequence")
+
+        accessorElement = sequenceAccessor.first["ChildElement1"]
+        accessorElement.text = "childText"
+        XCTAssertEqual(accessorElement.text, nil, "cannot set text for sequence")
+
+        accessorElement = sequenceAccessor.first["ChildElement1"].first
+        accessorElement.text = "childText1"
+        XCTAssertEqual(accessorElement.text, "childText1", "set text for first element of first child")
+
+        accessorElement = sequenceAccessor.first["ChildElement1"].last
+        accessorElement.text = "childText2"
+        XCTAssertEqual(accessorElement.text, "childText2", "set text for last element of first child")
+
+        XCTAssertEqual(
+            try XML.document(sequenceAccessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Element key=\"value\">newText<ChildElement1 >childText1</ChildElement1><ChildElement1 >childText2</ChildElement1></Element><Element >newText2<ChildElement2 ></ChildElement2><ChildElement2 ></ChildElement2></Element>",
+            "end document has newly added texts"
+        )
+    }
     
     func testAttributes() {
         let accessor = XML.Accessor(singleElement())

@@ -235,21 +235,26 @@ extension XML {
             }
             return name
         }
-        
+
+        /// get and set text on single element
         public var text: String? {
-            let text: String?
-            switch self {
-            case .singleElement(let element):
-                text = element.text
-            case .failure(_), .sequence(_):
-                fallthrough
-            default:
-                text = nil
-                break
+            get {
+                switch self {
+                case .singleElement(let element):
+                    return element.text
+                default:
+                    return nil
+                }
             }
-            return text
+            set {
+                switch self {
+                case .singleElement(let element):
+                    element.text = newValue
+                default:
+                    break
+                }
+            }
         }
-        
         
         /// syntax sugar to access Bool Text
         public var bool: Bool? {
