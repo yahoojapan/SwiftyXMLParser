@@ -238,7 +238,7 @@ class AccessorTests: XCTestCase {
 
         XCTAssertEqual(
             try XML.document(accessor),
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"value\">text2<ChildElement >childText1</ChildElement><ChildElement >childText2</ChildElement></RootElement>",
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"value\">text2<ChildElement>childText1</ChildElement><ChildElement>childText2</ChildElement></RootElement>",
             "end document has newly added texts"
         )
 
@@ -268,7 +268,7 @@ class AccessorTests: XCTestCase {
 
         XCTAssertEqual(
             try XML.document(sequenceAccessor),
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Element key=\"value\">newText<ChildElement1 >childText1</ChildElement1><ChildElement1 >childText2</ChildElement1></Element><Element >newText2<ChildElement2 ></ChildElement2><ChildElement2 ></ChildElement2></Element>",
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Element key=\"value\">newText<ChildElement1>childText1</ChildElement1><ChildElement1>childText2</ChildElement1></Element><Element>newText2<ChildElement2></ChildElement2><ChildElement2></ChildElement2></Element>",
             "end document has newly added texts"
         )
     }
@@ -414,7 +414,7 @@ class AccessorTests: XCTestCase {
 
         XCTAssertEqual(
             try XML.document(accessor),
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><env:RootElement key=\"value\">text<ns1:ChildElement >childText1</ns1:ChildElement><ns2:ChildElement >childText2</ns2:ChildElement></env:RootElement>",
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><env:RootElement key=\"value\">text<ns1:ChildElement>childText1</ns1:ChildElement><ns2:ChildElement>childText2</ns2:ChildElement></env:RootElement>",
             "end document preserves elements with namespaces"
         )
     }

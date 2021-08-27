@@ -507,7 +507,7 @@ extension XML {
         private func traverse(_ element: Element) -> String {
             let name = element.name
             let text = element.text ?? ""
-            let attrs = element.attributes.map { (k, v) in "\(k)=\"\(v)\""  }.joined(separator: " ")
+            let attrs = element.attributes.map { (k, v) in "\(k)=\"\(v)\"" }.joined(separator: " ")
 
             let childDocs = element.childElements.reduce("", { (result, element) in
                 result + traverse(element)
@@ -516,7 +516,7 @@ extension XML {
             if name == "XML.Parser.AbstructedDocumentRoot" {
                 return childDocs
             } else {
-                return "<\(name) \(attrs)>\(text)\(childDocs)</\(name)>"
+                return "<\(name)\(attrs.isEmpty ? "" : " ")\(attrs)>\(text)\(childDocs)</\(name)>"
             }
         }
     }

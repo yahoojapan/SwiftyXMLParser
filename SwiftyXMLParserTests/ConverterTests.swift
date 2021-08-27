@@ -116,6 +116,32 @@ class ConverterTests: XCTestCase {
             XCTAssertEqual(result, extpected)
         }
     }
+
+    func testMakeDocumentWithoutAttributes() throws {
+        let element = XML.Element(name: "name")
+        let converter = XML.Converter(XML.Accessor(element))
+
+        XCTAssertEqual(
+            try converter.makeDocument(),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><name></name>",
+            "convert xml document without extra spaces when no attributes are provided"
+        )
+
+        let element2 = XML.Element(name: "name",
+                                   text: "text",
+                                   attributes: ["key": "value"],
+                                   childElements: [
+                                    XML.Element(name: "name1"),
+                                    XML.Element(name: "name2", text: "text2")
+                                   ])
+        let converter2 = XML.Converter(XML.Accessor(element2))
+
+        XCTAssertEqual(
+            try converter2.makeDocument(),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><name key=\"value\">text<name1></name1><name2>text2</name2></name>",
+            "convert xml document with child elements without extra spaces when no attributes are provided"
+        )
+    }
 }
 
 extension XML.Element {
