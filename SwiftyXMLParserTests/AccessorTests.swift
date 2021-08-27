@@ -28,6 +28,7 @@ import XCTest
 class AccessorTests: XCTestCase {
 
     override func setUp() {
+        XML.ignoreNamespaces = false
         super.setUp()
     }
     
@@ -393,7 +394,30 @@ class AccessorTests: XCTestCase {
         let failureTexts = failureAccessor.compactMap { $0.text }
         XCTAssertEqual(failureTexts, [], "has no text")
     }
-    
+
+    func testIgnoreNamespaces() throws {
+        let accessor = XML.Accessor(singleElementWithNamespaces())
+        XCTAssertEqual(accessor.text, "text", "access element text")
+
+        var element = accessor["ChildElement"].first
+        XCTAssertEqual(element.text, nil, "does not find element without ignoring namespace")
+
+        XML.ignoreNamespaces = true
+
+        element = accessor["ChildElement"].first
+        XCTAssertEqual(element.text, "childText1", "access text for first child element ignoring namespace")
+
+        element = accessor["ChildElement"].last
+        XCTAssertEqual(element.text, "childText2", "access text for last child element ignoring namespace")
+
+        XCTAssertEqual(accessor["ChildElement"].all?.count, 2)
+
+        XCTAssertEqual(
+            try XML.document(accessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><env:RootElement key=\"value\">text<ns1:ChildElement >childText1</ns1:ChildElement><ns2:ChildElement >childText2</ns2:ChildElement></env:RootElement>",
+            "end document preserves elements with namespaces"
+        )
+    }
     
     func testIterator() {
         let accessor = XML.Accessor(singleElement())
@@ -425,6 +449,17 @@ class AccessorTests: XCTestCase {
         element.childElements = [
             XML.Element(name: "ChildElement"),
             XML.Element(name: "ChildElement")
+        ]
+        return element
+    }
+
+    fileprivate func singleElementWithNamespaces() -> XML.Element {
+        let element = XML.Element(name: "env:RootElement")
+        element.text = "text"
+        element.attributes = ["key": "value"]
+        element.childElements = [
+            XML.Element(name: "ns1:ChildElement", text: "childText1"),
+            XML.Element(name: "ns2:ChildElement", text: "childText2"),
         ]
         return element
     }

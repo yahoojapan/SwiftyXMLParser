@@ -128,7 +128,13 @@ extension XML {
             let accessor: Accessor
             switch self {
             case .singleElement(let element):
-                let filterdElements = element.childElements.filter { $0.name == key }
+                let filterdElements = element.childElements.filter {
+                    if XML.ignoreNamespaces {
+                        return key == $0.name.components(separatedBy: ":").last ?? $0.name
+                    } else {
+                        return key == $0.name
+                    }
+                }
                 if filterdElements.isEmpty {
                     let error = accessError("\(key) not found.")
                     accessor =  Accessor(error)

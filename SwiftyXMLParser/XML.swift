@@ -86,6 +86,13 @@ public func ?<< <T>(lhs: inout [T], rhs: T?) {
  ```
 */
 open class XML {
+
+    /**
+    Global XML setting for ignoring namespaces.
+    If set to true all accessors will ignore the first part of an element name up to a semicolon (:).
+     */
+    static var ignoreNamespaces = false
+
     /**
     Interface to parse NSData
     
