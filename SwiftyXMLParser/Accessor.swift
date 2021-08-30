@@ -462,7 +462,7 @@ extension XML {
 }
 
 extension XML {
-    /// Conveter to make xml document from Accessor.
+    /// Converter to make xml document from Accessor.
     public class Converter {
         let accessor: XML.Accessor
 
@@ -471,7 +471,9 @@ extension XML {
         }
         
         /**
-         If Accessor object has correct XML path, return the XML element, otherwith return error
+         Convert accessor back to XML document string.
+
+         - Parameter withDeclaration:Prefix with standard XML declaration (default true)
          
          example:
          
@@ -484,12 +486,12 @@ extension XML {
          ```
          
          */
-        public func makeDocument() throws -> String {
+        public func makeDocument(withDeclaration: Bool = true) throws -> String {
             if case .failure(let err) = accessor {
                 throw err
             }
 
-            var doc: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+            var doc = withDeclaration ? "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" : ""
             for hit in accessor {
                 switch hit {
                 case .singleElement(let element):

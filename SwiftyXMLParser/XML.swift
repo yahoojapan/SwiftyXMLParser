@@ -142,8 +142,15 @@ open class XML {
         
         return Parser(trimming: manner).parse(data)
     }
-    
-    open class func document(_ accessor: Accessor) throws -> String {
-        return try Converter(accessor).makeDocument()
+
+    /**
+     Convert accessor back to XML document string.
+
+     - Parameter accessor:XML accessor
+     - Parameter withDeclaration:Prefix with standard XML declaration (default true)
+     - Returns:XML document string
+     */
+    open class func document(_ accessor: Accessor, withDeclaration: Bool = true) throws -> String {
+        return try Converter(accessor).makeDocument(withDeclaration: withDeclaration)
     }
 }

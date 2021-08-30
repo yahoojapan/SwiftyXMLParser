@@ -142,6 +142,28 @@ class ConverterTests: XCTestCase {
             "convert xml document with child elements without extra spaces when no attributes are provided"
         )
     }
+
+    func testMakeWithoutDeclaration() throws {
+        let element = XML.Element(name: "name")
+        let converter = XML.Converter(XML.Accessor(element))
+
+        XCTAssertEqual(
+            try converter.makeDocument(withDeclaration: false),
+            "<name></name>",
+            "convert xml document without xml declaration header"
+        )
+
+        let element2 = XML.Element(name: "name",
+                                   text: "text",
+                                   attributes: ["key": "value"])
+        let converter2 = XML.Converter(XML.Accessor(element2))
+
+        XCTAssertEqual(
+            try converter2.makeDocument(withDeclaration: false),
+            "<name key=\"value\">text</name>",
+            "convert xml document without xml declaration header"
+        )
+    }
 }
 
 extension XML.Element {
