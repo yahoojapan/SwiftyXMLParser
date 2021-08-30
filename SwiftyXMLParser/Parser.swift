@@ -34,10 +34,24 @@ extension XML {
         /// See https://developer.apple.com/documentation/foundation/xmlparser/errorcode
         private(set) var error: XMLError?
         
-        func parse(_ data: Data) -> Accessor {
+        private func setupParsing() {
             stack = [Element]()
             stack.append(documentRoot)
+        }
+        
+        func parse(_ data: Data) -> Accessor {
+            setupParsing()
             let parser = XMLParser(data: data)
+            return startParsing(parser)
+        }
+        
+        func parse(_ stream: InputStream) -> Accessor {
+            setupParsing()
+            let parser = XMLParser(stream: stream)
+            return startParsing(parser)
+        }
+
+        private func startParsing(_ parser: XMLParser) -> Accessor {
             parser.delegate = self
             parser.parse()
             if let error = error {

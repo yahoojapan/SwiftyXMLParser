@@ -87,6 +87,17 @@ public func ?<< <T>(lhs: inout [T], rhs: T?) {
 */
 open class XML {
     /**
+    Interface to parse InputStream
+    
+    - parameter strea:InputStream for an XML document
+    - returns:Accessor object to access XML document
+    */
+    open class func parse(_ stream: InputStream) -> Accessor {
+        return Parser().parse(stream)
+    }
+    
+    
+    /**
     Interface to parse NSData
     
     - parameter data:NSData XML document
