@@ -283,19 +283,24 @@ extension XML {
             return text.flatMap({Double($0)})
         }
         
-        /// access to XML Attributes
+        /// get and set XML attributes on single element
         public var attributes: [String: String] {
-            let attributes: [String: String]
-            switch self {
-            case .singleElement(let element):
-                attributes = element.attributes
-            case .failure(_), .sequence(_):
-                fallthrough
-            default:
-                attributes = [String: String]()
-                break
+            get {
+                switch self {
+                case .singleElement(let element):
+                    return element.attributes
+                default:
+                    return [String: String]()
+                }
             }
-            return attributes
+            set {
+                switch self {
+                case .singleElement(let element):
+                    element.attributes = newValue
+                default:
+                    break
+                }
+            }
         }
         
         /// access to child Elements

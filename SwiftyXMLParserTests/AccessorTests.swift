@@ -295,6 +295,41 @@ class AccessorTests: XCTestCase {
             XCTAssert(true, "fail to access name with Failure Accessor")
         }
     }
+
+    func testSetAttributes() throws {
+        var accessor = XML.Accessor(singleElement())
+        accessor.attributes = ["key": "newValue"]
+        XCTAssertEqual(accessor.attributes, ["key": "newValue"], "edit attribute on first single element")
+
+        var element = accessor["ChildElement"].first
+        element.attributes = ["key": "childAttribute1"]
+        XCTAssertEqual(element.attributes, ["key": "childAttribute1"], "set attribute for first child element")
+
+        element = accessor["ChildElement"].last
+        element.attributes = ["key": "childAttribute2"]
+        XCTAssertEqual(element.attributes, ["key": "childAttribute2"], "set attribute for last child element")
+
+        XCTAssertEqual(
+            try XML.document(accessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"newValue\">text<ChildElement key=\"childAttribute1\"></ChildElement><ChildElement key=\"childAttribute2\"></ChildElement></RootElement>",
+            "end document has updated attributes"
+        )
+
+        let accessor2 = XML.Accessor(singleElementWithChildrenAttributes())
+        var element2 = accessor2["ChildElement1"]
+        element2.attributes["key1"] = "newValue1"
+        XCTAssertEqual(element2.attributes, ["key1": "newValue1"], "edit attribute for child element")
+
+        element2 = accessor2["ChildElement2"]
+        element2.attributes["key2"] = "newValue2"
+        XCTAssertEqual(element2.attributes, ["key2": "newValue2"], "edit attribute for child element")
+
+        XCTAssertEqual(
+            try XML.document(accessor2),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement><ChildElement1 key1=\"newValue1\"></ChildElement1><ChildElement2 key2=\"newValue2\"></ChildElement2></RootElement>",
+            "end document has updated attributes"
+        )
+    }
     
     func testAll() {
         let accessor = XML.Accessor(singleElement())
@@ -460,6 +495,15 @@ class AccessorTests: XCTestCase {
         element.childElements = [
             XML.Element(name: "ns1:ChildElement", text: "childText1"),
             XML.Element(name: "ns2:ChildElement", text: "childText2"),
+        ]
+        return element
+    }
+
+    fileprivate func singleElementWithChildrenAttributes() -> XML.Element {
+        let element = XML.Element(name: "RootElement")
+        element.childElements = [
+            XML.Element(name: "ChildElement1", attributes: ["key1": "value1"]),
+            XML.Element(name: "ChildElement2", attributes: ["key2": "value2"])
         ]
         return element
     }
