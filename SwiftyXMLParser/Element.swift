@@ -32,6 +32,7 @@ extension XML {
         open var childElements = [Element]()
         open var lineNumberStart = -1
         open var lineNumberEnd = -1
+        open var CDATA: Data?
         
         // for println
         open weak var parentElement: Element?

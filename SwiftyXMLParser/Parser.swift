@@ -81,6 +81,10 @@ extension XML {
                 stack.last?.text = "" + string
             }
         }
+
+        func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
+            stack.last?.CDATA = CDATABlock
+        }
         
         func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
             stack.last?.lineNumberEnd = parser.lineNumber
