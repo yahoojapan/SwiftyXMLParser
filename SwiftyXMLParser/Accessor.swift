@@ -412,6 +412,15 @@ extension XML {
             }
         }
 
+        public func append(_ newElement: Element) {
+            switch self {
+            case .singleElement(let element):
+                element.childElements.append(newElement)
+            default:
+                break
+            }
+        }
+
         // MARK: - SequenceType
         
         public func makeIterator() -> AnyIterator<Accessor> {

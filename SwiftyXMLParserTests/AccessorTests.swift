@@ -453,6 +453,33 @@ class AccessorTests: XCTestCase {
             "end document preserves elements with namespaces"
         )
     }
+
+    func testAppend() throws {
+        let accessor = XML.Accessor(singleElement())
+
+        XCTAssertEqual(accessor["RootElement"].text, nil)
+
+        accessor.append(singleElement())
+        XCTAssertEqual(accessor["RootElement"].text, "text")
+
+        XCTAssertEqual(
+            try XML.document(accessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"value\">text<ChildElement></ChildElement><ChildElement></ChildElement><RootElement key=\"value\">text<ChildElement></ChildElement><ChildElement></ChildElement></RootElement></RootElement>",
+            "end document has added element"
+        )
+
+        let accessor2 = XML.Accessor(singleElement())
+
+        accessor2["ChildElement"].first.append(singleElementWithChildrenAttributes())
+        XCTAssertEqual(accessor2["ChildElement"].first["RootElement", "ChildElement1"].attributes, ["key1": "value1"])
+        XCTAssertEqual(accessor2["ChildElement"].first["RootElement", "ChildElement2"].attributes, ["key2": "value2"])
+
+        XCTAssertEqual(
+            try XML.document(accessor2),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"value\">text<ChildElement><RootElement><ChildElement1 key1=\"value1\"></ChildElement1><ChildElement2 key2=\"value2\"></ChildElement2></RootElement></ChildElement><ChildElement></ChildElement></RootElement>",
+            "end document has added element"
+        )
+    }
     
     func testIterator() {
         let accessor = XML.Accessor(singleElement())
