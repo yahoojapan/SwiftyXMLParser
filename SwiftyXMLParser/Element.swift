@@ -30,6 +30,8 @@ extension XML {
         open var text: String?
         open var attributes = [String: String]()
         open var childElements = [Element]()
+        open var lineNumberStart = -1
+        open var lineNumberEnd = -1
         
         // for println
         open weak var parentElement: Element?

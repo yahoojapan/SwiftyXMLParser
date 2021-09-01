@@ -62,6 +62,7 @@ extension XML {
         
         func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
             let node = Element(name: elementName)
+            node.lineNumberStart = parser.lineNumber
             if !attributeDict.isEmpty {
                 node.attributes = attributeDict
             }
@@ -82,6 +83,7 @@ extension XML {
         }
         
         func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+            stack.last?.lineNumberEnd = parser.lineNumber
             if let trimmingManner = self.trimmingManner {
                 stack.last?.text = stack.last?.text?.trimmingCharacters(in: trimmingManner)
             }
