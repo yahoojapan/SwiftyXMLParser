@@ -26,37 +26,41 @@ import XCTest
 @testable import SwiftyXMLParser
 
 class XMLTests: XCTestCase {
+    fileprivate let packageRootPath = URL(fileURLWithPath: #file)
+        .pathComponents
+        .dropLast()
+        .joined(separator: "/")
+        .dropFirst()
 
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         super.tearDown()
     }
 
-    func testParse() {
-        if let path = Bundle(for: type(of: self)).path(forResource: "XMLDocument", ofType: "xml") {
-            if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-                let xml = XML.parse(data)
-                if  let _ = xml["ResultSet"].error {
-                    XCTFail("fail to parse")
+    private func getPath(_ name: String) -> String {
+        "\(packageRootPath)/\(name)"
+    }
 
-                } else {
-                    XCTAssert(true, "sucess to Parse")
-                }
+    func testParse() {
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("XMLDocument.xml"))) {
+            let xml = XML.parse(data)
+            if  let _ = xml["ResultSet"].error {
+                XCTFail("fail to parse")
+
             } else {
-                XCTFail("fail to generate data")
+                XCTAssert(true, "sucess to Parse")
             }
         } else {
-            XCTFail("fail to parse")
+            XCTFail("fail to generate data")
         }
     }
     
     
     func testSuccessParseFromString() {
-        if let path = Bundle(for: type(of: self)).path(forResource: "XMLDocument", ofType: "xml"),
-            let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8),
+        if let string = try? String(contentsOfFile: getPath("XMLDocument.xml"), encoding: String.Encoding.utf8),
             let xml = try? XML.parse(string) {
             if  let _ = xml["ResultSet"].error {
                 XCTFail("fail to parse")
@@ -81,5 +85,4 @@ class XMLTests: XCTestCase {
             XCTFail("Fail Parse")
         }
     }
-
 }
