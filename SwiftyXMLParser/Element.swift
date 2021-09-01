@@ -28,14 +28,17 @@ extension XML {
     open class Element {
         open var name: String
         open var text: String?
-        open var attributes = [String: String]()
-        open var childElements = [Element]()
+        open var attributes: [String: String]
+        open var childElements: [Element]
         
         // for println
         open weak var parentElement: Element?
         
-        public init(name: String) {
+        public init(name: String, text: String? = nil, attributes: [String: String] = [:], childElements: [Element] = []) {
             self.name = name
+            self.text = text
+            self.attributes = attributes
+            self.childElements = childElements
         }
     }
 }

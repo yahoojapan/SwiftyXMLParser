@@ -505,52 +505,37 @@ class AccessorTests: XCTestCase {
     }
     
     fileprivate func singleElement() -> XML.Element {
-        let element = XML.Element(name: "RootElement")
-        element.text = "text"
-        element.attributes = ["key": "value"]
-        element.childElements = [
+        return XML.Element(name: "RootElement", text: "text", attributes: ["key": "value"], childElements: [
             XML.Element(name: "ChildElement"),
             XML.Element(name: "ChildElement")
-        ]
-        return element
+        ])
     }
 
     fileprivate func singleElementWithNamespaces() -> XML.Element {
-        let element = XML.Element(name: "env:RootElement")
-        element.text = "text"
-        element.attributes = ["key": "value"]
-        element.childElements = [
+        return XML.Element(name: "env:RootElement", text: "text", attributes: ["key": "value"], childElements: [
             XML.Element(name: "ns1:ChildElement", text: "childText1"),
             XML.Element(name: "ns2:ChildElement", text: "childText2"),
-        ]
-        return element
+        ])
     }
 
     fileprivate func singleElementWithChildrenAttributes() -> XML.Element {
-        let element = XML.Element(name: "RootElement")
-        element.childElements = [
+        return XML.Element(name: "RootElement", childElements: [
             XML.Element(name: "ChildElement1", attributes: ["key1": "value1"]),
             XML.Element(name: "ChildElement2", attributes: ["key2": "value2"])
-        ]
-        return element
+        ])
     }
     
     fileprivate func sequence() -> [XML.Element] {
-        let elem1 = XML.Element(name: "Element")
-        elem1.text = "text"
-        elem1.attributes = ["key": "value"]
-        elem1.childElements = [
-            XML.Element(name: "ChildElement1"),
-            XML.Element(name: "ChildElement1")
+        return [
+            XML.Element(name: "Element", text: "text", attributes: ["key": "value"], childElements: [
+                XML.Element(name: "ChildElement1"),
+                XML.Element(name: "ChildElement1")
+            ]),
+            XML.Element(name: "Element", text: "text2", childElements: [
+                XML.Element(name: "ChildElement2"),
+                XML.Element(name: "ChildElement2")
+            ])
         ]
-        let elem2 = XML.Element(name: "Element")
-        elem2.text = "text2"
-        elem2.childElements = [
-            XML.Element(name: "ChildElement2"),
-            XML.Element(name: "ChildElement2")
-        ]
-        let elements = [ elem1, elem2 ]
-        return elements
     }
     
     fileprivate func failure() -> XMLError {

@@ -165,15 +165,3 @@ class ConverterTests: XCTestCase {
         )
     }
 }
-
-extension XML.Element {
-    convenience init(name: String,
-                     text: String? = nil,
-                     attributes: [String: String] = [String: String](),
-                     childElements: [XML.Element] = [XML.Element]()) {
-        self.init(name: name)
-        self.text = text
-        self.attributes = attributes
-        self.childElements = childElements
-    }
-}
