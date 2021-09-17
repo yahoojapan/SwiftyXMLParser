@@ -129,7 +129,7 @@ extension XML {
             switch self {
             case .singleElement(let element):
                 let filterdElements = element.childElements.filter {
-                    if XML.ignoreNamespaces {
+                    if element.ignoreNamespaces {
                         return key == $0.name.components(separatedBy: ":").last ?? $0.name
                     } else {
                         return key == $0.name
