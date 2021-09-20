@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftyXMLParser"
-  s.version      = "5.4.0"
+  s.version      = "5.5.0"
   s.summary      = "Simple XML Parser implemented by Swift"
 
   s.description  = <<-DESC
@@ -24,5 +24,5 @@ Pod::Spec.new do |s|
   s.source_files = "SwiftyXMLParser/*.swift"
   s.requires_arc = true
 
-  s.source       = { :git => "https://github.com/yahoojapan/SwiftyXMLParser.git", :tag => "5.4.0" }
+  s.source       = { :git => "https://github.com/yahoojapan/SwiftyXMLParser.git", :tag => "5.5.0" }
 end
