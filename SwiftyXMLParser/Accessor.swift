@@ -128,29 +128,26 @@ extension XML {
             let accessor: Accessor
             switch self {
             case .singleElement(let element):
-                let filterdElements = element.childElements.filter {
-                    if element.ignoreNamespaces {
+                let childElements = element.childElements.filter {
+                    if $0.ignoreNamespaces {
                         return key == $0.name.components(separatedBy: ":").last ?? $0.name
                     } else {
                         return key == $0.name
                     }
                 }
-                if filterdElements.isEmpty {
+                if childElements.isEmpty {
                     let error = accessError("\(key) not found.")
-                    accessor =  Accessor(error)
-                } else if filterdElements.count == 1 {
-                    accessor =  Accessor(filterdElements[0])
+                    accessor = Accessor(error)
+                } else if childElements.count == 1 {
+                    accessor = Accessor(childElements[0])
                 } else {
-                    accessor =  Accessor(filterdElements)
+                    accessor = Accessor(childElements)
                 }
             case .failure(let error):
-                accessor =  Accessor(error)
-            case .sequence(_):
-                fallthrough
+                accessor = Accessor(error)
             default:
                 let error = accessError("cannot access \(key), because of multiple elements")
-                accessor =  Accessor(error)
-                break
+                accessor = Accessor(error)
             }
             return accessor
         }
