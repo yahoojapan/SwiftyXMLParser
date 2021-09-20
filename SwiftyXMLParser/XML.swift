@@ -86,57 +86,43 @@ public func ?<< <T>(lhs: inout [T], rhs: T?) {
  ```
 */
 open class XML {
+
     /**
-    Interface to parse NSData
-    
-    - parameter data:NSData XML document
-    - returns:Accessor object to access XML document
-    */
-    open class func parse(_ data: Data) -> Accessor {
-        return Parser().parse(data)
-    }
-    
-    /**
-     Interface to parse String
+     Interface to parse Data
      
-     - Parameter str:String XML document
-     - Returns:Accessor object to access XML document
-     */
-    open class func parse(_ str: String) throws -> Accessor {
-        guard let data = str.data(using: String.Encoding.utf8) else {
-            throw XMLError.failToEncodeString
-        }
-        
-        return Parser().parse(data)
-    }
-    
-    /**
-     Interface to parse NSData
-     
-     - parameter data:NSData XML document
-     - parameter manner:NSCharacterSet If you wannna trim Text, assign this arg
+     - parameter data:Data XML document
+     - parameter manner:CharacterSet If you want to trim text (default off)
+     - parameter ignoreNamespaces:Bool If set to true all accessors will ignore the first part of an element name up to a semicolon (default false)
      - returns:Accessor object to access XML document
      */
-    open class func parse(_ data: Data, trimming manner: CharacterSet) -> Accessor {
-        return Parser(trimming: manner).parse(data)
+    open class func parse(_ data: Data, trimming manner: CharacterSet? = nil, ignoreNamespaces: Bool = false) -> Accessor {
+        return Parser(trimming: manner, ignoreNamespaces: ignoreNamespaces).parse(data)
     }
     
     /**
      Interface to parse String
      
-     - Parameter str:String XML document
-     - parameter manner:NSCharacterSet If you wannna trim Text, assign this arg
-     - Returns:Accessor object to access XML document
+     - parameter str:String XML document
+     - parameter manner:CharacterSet If you want to trim text (default off)
+     - parameter ignoreNamespaces:Bool If set to true all accessors will ignore the first part of an element name up to a semicolon (default false)
+     - returns:Accessor object to access XML document
      */
-    open class func parse(_ str: String, trimming manner: CharacterSet) throws -> Accessor {
+    open class func parse(_ str: String, trimming manner: CharacterSet? = nil, ignoreNamespaces: Bool = false) throws -> Accessor {
         guard let data = str.data(using: String.Encoding.utf8) else {
             throw XMLError.failToEncodeString
         }
         
-        return Parser(trimming: manner).parse(data)
+        return Parser(trimming: manner, ignoreNamespaces: ignoreNamespaces).parse(data)
     }
-    
-    open class func document(_ accessor: Accessor) throws -> String {
-        return try Converter(accessor).makeDocument()
+
+    /**
+     Convert accessor back to XML document string.
+
+     - parameter accessor:XML accessor
+     - parameter withDeclaration:Prefix with standard XML declaration (default true)
+     - returns:XML document string
+     */
+    open class func document(_ accessor: Accessor, withDeclaration: Bool = true) throws -> String {
+        return try Converter(accessor).makeDocument(withDeclaration: withDeclaration)
     }
 }

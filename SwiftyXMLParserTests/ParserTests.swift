@@ -145,6 +145,24 @@ class ParserTests: XCTestCase {
             XCTAssert(false, "fail")
         }
     }
+
+    func testIgnoreNamespaces() {
+        let data = """
+            <?xml version="1.0" encoding="UTF-8"?>
+            <env:RootElement key="value">
+                <ns1:ChildElement>childText1</ns1:ChildElement>
+                <ns2:ChildElement>childText2</ns2:ChildElement>
+            </env:RootElement>
+        """.trimmingCharacters(in: .whitespacesAndNewlines).data(using: .utf8)!
+
+        let xml = XML.Parser().parse(data)
+        XCTAssertEqual(xml["env:RootElement", "ns1:ChildElement"].text, "childText1", "can access element when including namespace")
+        XCTAssertEqual(xml["RootElement", "ChildElement"].first.text, nil, "cannot find elements with namespaces")
+
+        let xmlIgnoreNamespaces = XML.Parser(ignoreNamespaces: true).parse(data)
+        XCTAssertEqual(xmlIgnoreNamespaces["RootElement", "ChildElement"].first.text, "childText1", "can find element when ignoring namespaces")
+        XCTAssertEqual(xmlIgnoreNamespaces["RootElement", "ChildElement"].last.text, "childText2", "can find element when ignoring namespaces")
+    }
     
     func testParseErrorToInvalidCharacter() {
         let str = "<xmlopening>@ß123\u{1c}</xmlopening>"

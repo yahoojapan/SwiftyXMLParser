@@ -128,23 +128,26 @@ extension XML {
             let accessor: Accessor
             switch self {
             case .singleElement(let element):
-                let filterdElements = element.childElements.filter { $0.name == key }
-                if filterdElements.isEmpty {
+                let childElements = element.childElements.filter {
+                    if $0.ignoreNamespaces {
+                        return key == $0.name.components(separatedBy: ":").last ?? $0.name
+                    } else {
+                        return key == $0.name
+                    }
+                }
+                if childElements.isEmpty {
                     let error = accessError("\(key) not found.")
-                    accessor =  Accessor(error)
-                } else if filterdElements.count == 1 {
-                    accessor =  Accessor(filterdElements[0])
+                    accessor = Accessor(error)
+                } else if childElements.count == 1 {
+                    accessor = Accessor(childElements[0])
                 } else {
-                    accessor =  Accessor(filterdElements)
+                    accessor = Accessor(childElements)
                 }
             case .failure(let error):
-                accessor =  Accessor(error)
-            case .sequence(_):
-                fallthrough
+                accessor = Accessor(error)
             default:
                 let error = accessError("cannot access \(key), because of multiple elements")
-                accessor =  Accessor(error)
-                break
+                accessor = Accessor(error)
             }
             return accessor
         }
@@ -235,21 +238,26 @@ extension XML {
             }
             return name
         }
-        
+
+        /// get and set text on single element
         public var text: String? {
-            let text: String?
-            switch self {
-            case .singleElement(let element):
-                text = element.text
-            case .failure(_), .sequence(_):
-                fallthrough
-            default:
-                text = nil
-                break
+            get {
+                switch self {
+                case .singleElement(let element):
+                    return element.text
+                default:
+                    return nil
+                }
             }
-            return text
+            set {
+                switch self {
+                case .singleElement(let element):
+                    element.text = newValue
+                default:
+                    break
+                }
+            }
         }
-        
         
         /// syntax sugar to access Bool Text
         public var bool: Bool? {
@@ -272,19 +280,24 @@ extension XML {
             return text.flatMap({Double($0)})
         }
         
-        /// access to XML Attributes
+        /// get and set XML attributes on single element
         public var attributes: [String: String] {
-            let attributes: [String: String]
-            switch self {
-            case .singleElement(let element):
-                attributes = element.attributes
-            case .failure(_), .sequence(_):
-                fallthrough
-            default:
-                attributes = [String: String]()
-                break
+            get {
+                switch self {
+                case .singleElement(let element):
+                    return element.attributes
+                default:
+                    return [String: String]()
+                }
             }
-            return attributes
+            set {
+                switch self {
+                case .singleElement(let element):
+                    element.attributes = newValue
+                default:
+                    break
+                }
+            }
         }
         
         /// access to child Elements
@@ -396,6 +409,15 @@ extension XML {
             }
         }
 
+        public func append(_ newElement: Element) {
+            switch self {
+            case .singleElement(let element):
+                element.childElements.append(newElement)
+            default:
+                break
+            }
+        }
+
         // MARK: - SequenceType
         
         public func makeIterator() -> AnyIterator<Accessor> {
@@ -451,7 +473,7 @@ extension XML {
 }
 
 extension XML {
-    /// Conveter to make xml document from Accessor.
+    /// Converter to make xml document from Accessor.
     public class Converter {
         let accessor: XML.Accessor
 
@@ -460,7 +482,9 @@ extension XML {
         }
         
         /**
-         If Accessor object has correct XML path, return the XML element, otherwith return error
+         Convert accessor back to XML document string.
+
+         - Parameter withDeclaration:Prefix with standard XML declaration (default true)
          
          example:
          
@@ -473,12 +497,12 @@ extension XML {
          ```
          
          */
-        public func makeDocument() throws -> String {
+        public func makeDocument(withDeclaration: Bool = true) throws -> String {
             if case .failure(let err) = accessor {
                 throw err
             }
 
-            var doc: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+            var doc = withDeclaration ? "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" : ""
             for hit in accessor {
                 switch hit {
                 case .singleElement(let element):
@@ -496,7 +520,7 @@ extension XML {
         private func traverse(_ element: Element) -> String {
             let name = element.name
             let text = element.text ?? ""
-            let attrs = element.attributes.map { (k, v) in "\(k)=\"\(v)\""  }.joined(separator: " ")
+            let attrs = element.attributes.map { (k, v) in "\(k)=\"\(v)\"" }.joined(separator: " ")
 
             let childDocs = element.childElements.reduce("", { (result, element) in
                 result + traverse(element)
@@ -505,7 +529,7 @@ extension XML {
             if name == "XML.Parser.AbstructedDocumentRoot" {
                 return childDocs
             } else {
-                return "<\(name) \(attrs)>\(text)\(childDocs)</\(name)>"
+                return "<\(name)\(attrs.isEmpty ? "" : " ")\(attrs)>\(text)\(childDocs)</\(name)>"
             }
         }
     }

@@ -57,7 +57,20 @@ class XMLTests: XCTestCase {
             XCTFail("fail to generate data")
         }
     }
-    
+
+    func testParseWithArguments() {
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("XMLDocument.xml"))) {
+            let xml = XML.parse(data, trimming: .whitespacesAndNewlines, ignoreNamespaces: true)
+            if  let _ = xml["ResultSet"].error {
+                XCTFail("fail to parse")
+
+            } else {
+                XCTAssert(true, "sucess to Parse")
+            }
+        } else {
+            XCTFail("fail to generate data")
+        }
+    }
     
     func testSuccessParseFromString() {
         if let string = try? String(contentsOfFile: getPath("XMLDocument.xml"), encoding: String.Encoding.utf8),
@@ -71,7 +84,6 @@ class XMLTests: XCTestCase {
             XCTFail("fail to parse")
         }
     }
-    
     
     func testSuccessParseFromDoublebyteSpace() {
         guard let xml = try? XML.parse("<Name>　</Name>") else {
