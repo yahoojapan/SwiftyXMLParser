@@ -222,6 +222,24 @@ struct Entity {
 let entity = Entity()
 entity.names ?<< xml.ResultSet.Result.Hit[1].Name.text // assign if it has text
 ```
+
+### 7. Access CDATA
+```swift
+let str = """
+<Data name="DATE">
+    <value><![CDATA[2018-07-08]]></value>
+</Data>
+"""
+
+// parse xml document
+let xml = try! XML.parse(str)
+        
+if let cdata = xml.Data.value.element?.CDATA, 
+   let cdataStr = String(data: cdata, encoding: .utf8) {
+   print(cdataStr) // -> "2018-07-08"
+}
+```
+
 ### 7. Count child Elements
 ```swift
 let numberOfHits = xml.ResultSet.Result.Hit.all?.count 
@@ -243,7 +261,7 @@ for element in xml.ResultSet.Result.Hit {
 xml.ResultSet.Result.Hit.map { $0.Name.text }
 ```
 
-### 9. Generate XML document
+### 10. Generate XML document
 ```swift
 print(Converter(xml.ResultSet).makeDocument())
 ```
