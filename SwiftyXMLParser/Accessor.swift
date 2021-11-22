@@ -538,7 +538,7 @@ extension XML {
                     ["&", "&amp;"],
                     ["<", "&lt;"],
                     [">", "&gt;"]
-                ];
+                ]
                 return charactersToEscape.reduce(string) {
                     $0.replacingOccurrences(of: $1[0], with: $1[1], options: .literal, range: nil)
                 }
