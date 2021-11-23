@@ -117,6 +117,19 @@ class ConverterTests: XCTestCase {
         }
     }
 
+    func testMakeDocumentEscapingCharacters() throws {
+        let element = XML.Element(name: "name", text: "me&you", childElements: [
+            XML.Element(name: "child", text: "& < > &")
+        ])
+        let converter = XML.Converter(XML.Accessor(element))
+
+        XCTAssertEqual(
+            try converter.makeDocument(),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><name>me&amp;you<child>&amp; &lt; &gt; &amp;</child></name>",
+            "escape characters when making xml document"
+        )
+    }
+
     func testMakeDocumentWithoutAttributes() throws {
         let element = XML.Element(name: "name")
         let converter = XML.Converter(XML.Accessor(element))

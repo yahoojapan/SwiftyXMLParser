@@ -519,7 +519,7 @@ extension XML {
 
         private func traverse(_ element: Element) -> String {
             let name = element.name
-            let text = element.text ?? ""
+            let text = escapeXMLCharacters(element.text ?? "")
             let attrs = element.attributes.map { (k, v) in "\(k)=\"\(v)\"" }.joined(separator: " ")
 
             let childDocs = element.childElements.reduce("", { (result, element) in
@@ -531,6 +531,17 @@ extension XML {
             } else {
                 return "<\(name)\(attrs.isEmpty ? "" : " ")\(attrs)>\(text)\(childDocs)</\(name)>"
             }
+        }
+
+        private func escapeXMLCharacters(_ string: String) -> String {
+                let charactersToEscape = [
+                    ["&", "&amp;"],
+                    ["<", "&lt;"],
+                    [">", "&gt;"]
+                ]
+                return charactersToEscape.reduce(string) {
+                    $0.replacingOccurrences(of: $1[0], with: $1[1], options: .literal, range: nil)
+                }
         }
     }
 }
