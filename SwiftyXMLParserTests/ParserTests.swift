@@ -27,6 +27,11 @@ import XCTest
 
 
 class ParserTests: XCTestCase {
+    fileprivate let packageRootPath = URL(fileURLWithPath: #file)
+        .pathComponents
+        .dropLast()
+        .joined(separator: "/")
+        .dropFirst()
     
     override func setUp() {
         super.setUp()
@@ -35,12 +40,15 @@ class ParserTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
+
+    private func getPath(_ name: String) -> String {
+        "\(packageRootPath)/\(name)"
+    }
     
     func testSuccessParse() {
-        guard let path = Bundle(for: type(of: self)).path(forResource: "XMLDocument", ofType: "xml"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-                XCTFail("fail to parse")
-                return
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("XMLDocument.xml"))) else {
+            XCTFail("fail to parse")
+            return
         }
         
         let xml = XML.Parser().parse(data)
@@ -54,10 +62,9 @@ class ParserTests: XCTestCase {
     }
     
     func testFailParse() {
-        guard let path = Bundle(for: type(of: self)).path(forResource: "BrokenXMLDocument", ofType: "xml"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-                XCTFail("fail to parse")
-                return
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("BrokenXMLDocument.xml"))) else {
+            XCTFail("fail to parse")
+            return
         }
         
         let xml = XML.Parser().parse(data)
@@ -69,10 +76,9 @@ class ParserTests: XCTestCase {
     }
     
     func testTextParseWithMockData() {
-        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-                XCTFail("fail to parse")
-                return
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("SimpleDocument.xml"))) else {
+            XCTFail("fail to parse")
+            return
         }
         
         let xml = XML.Parser().parse(data)
@@ -84,10 +90,9 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceParseWithMockData() {
-        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-                XCTFail("fail to parse")
-                return
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("SimpleDocument.xml"))) else {
+            XCTFail("fail to parse")
+            return
         }
             
         let xml = XML.Parser().parse(data)
@@ -99,10 +104,9 @@ class ParserTests: XCTestCase {
     }
     
     func testReturnParseWithMockData() {
-        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-                XCTFail("fail to parse")
-                return
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("SimpleDocument.xml"))) else {
+            XCTFail("fail to parse")
+            return
         }
         
         let xml = XML.Parser().parse(data)
@@ -114,10 +118,9 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceAndReturnParseWithMockData() {
-        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-                XCTFail("fail to parse")
-                return
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("SimpleDocument.xml"))) else {
+            XCTFail("fail to parse")
+            return
         }
         
         let xml = XML.Parser().parse(data)
@@ -130,10 +133,9 @@ class ParserTests: XCTestCase {
     }
     
     func testWhitespaceAndReturnParseWithMockDataAndTrimmingWhitespaceAndLineBreak() {
-        guard let path = Bundle(for: type(of: self)).path(forResource: "SimpleDocument", ofType: "xml"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-                XCTFail("fail to parse")
-                return
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("SimpleDocument.xml"))) else {
+            XCTFail("fail to parse")
+            return
         }
 
         let xml = XML.Parser(trimming: .whitespacesAndNewlines).parse(data)
@@ -142,6 +144,24 @@ class ParserTests: XCTestCase {
         } else {
             XCTAssert(false, "fail")
         }
+    }
+
+    func testIgnoreNamespaces() {
+        let data = """
+            <?xml version="1.0" encoding="UTF-8"?>
+            <env:RootElement key="value">
+                <ns1:ChildElement>childText1</ns1:ChildElement>
+                <ns2:ChildElement>childText2</ns2:ChildElement>
+            </env:RootElement>
+        """.trimmingCharacters(in: .whitespacesAndNewlines).data(using: .utf8)!
+
+        let xml = XML.Parser().parse(data)
+        XCTAssertEqual(xml["env:RootElement", "ns1:ChildElement"].text, "childText1", "can access element when including namespace")
+        XCTAssertEqual(xml["RootElement", "ChildElement"].first.text, nil, "cannot find elements with namespaces")
+
+        let xmlIgnoreNamespaces = XML.Parser(ignoreNamespaces: true).parse(data)
+        XCTAssertEqual(xmlIgnoreNamespaces["RootElement", "ChildElement"].first.text, "childText1", "can find element when ignoring namespaces")
+        XCTAssertEqual(xmlIgnoreNamespaces["RootElement", "ChildElement"].last.text, "childText2", "can find element when ignoring namespaces")
     }
     
     func testParseErrorToInvalidCharacter() {
@@ -159,5 +179,20 @@ class ParserTests: XCTestCase {
         let str = "<xmlopening>@ß123\u{1c}</xmlopening>".addingPercentEncoding(withAllowedCharacters: CharacterSet.controlCharacters.inverted)!
         let xml = XML.Parser().parse(str.data(using: .utf8)!)
         XCTAssertEqual("@ß123\u{1c}", xml["xmlopening"].text?.removingPercentEncoding, "Parsed Success and trim them")
+    }
+
+    func testLineNumbers() {
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: getPath("SimpleDocument.xml"))) else {
+            XCTFail("fail to parse")
+            return
+        }
+
+        let xml = XML.Parser().parse(data)
+        guard let whitespaceReturnElement = xml["Result"]["WhitespaceReturn"].element else {
+            XCTFail("Element not found")
+            return
+        }
+        XCTAssertEqual(whitespaceReturnElement.lineNumberStart, 4)
+        XCTAssertEqual(whitespaceReturnElement.lineNumberEnd, 6)
     }
 }

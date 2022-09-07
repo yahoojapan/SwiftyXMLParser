@@ -28,14 +28,34 @@ extension XML {
     open class Element {
         open var name: String
         open var text: String?
-        open var attributes = [String: String]()
-        open var childElements = [Element]()
+        open var attributes: [String: String]
+        open var childElements: [Element]
+        open var lineNumberStart: Int
+        open var lineNumberEnd: Int
+        open var CDATA: Data?
+        open var ignoreNamespaces: Bool
         
         // for println
         open weak var parentElement: Element?
-        
-        public init(name: String) {
+
+        public init(
+            name: String,
+            text: String? = nil,
+            attributes: [String: String] = [:],
+            childElements: [Element] = [],
+            lineNumberStart: Int = -1,
+            lineNumberEnd: Int = -1,
+            CDATA: Data? = nil,
+            ignoreNamespaces: Bool = false
+        ) {
             self.name = name
+            self.text = text
+            self.attributes = attributes
+            self.childElements = childElements
+            self.lineNumberStart = lineNumberStart
+            self.lineNumberEnd = lineNumberEnd
+            self.CDATA = CDATA
+            self.ignoreNamespaces = ignoreNamespaces
         }
     }
 }

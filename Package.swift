@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftyXMLParser",
-    platforms: [.iOS(.v9), .macOS(.v10_10)],
+    platforms: [.iOS(.v9), .macOS(.v10_10), .watchOS(.v6)],
     products: [
         .library(name: "SwiftyXMLParser", targets: ["SwiftyXMLParser"])
     ],

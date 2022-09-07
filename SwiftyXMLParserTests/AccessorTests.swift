@@ -221,6 +221,56 @@ class AccessorTests: XCTestCase {
             XCTAssert(true, "fail to access name with Failure Accessor")
         }
     }
+
+    func testSetText() throws {
+        var accessor = XML.Accessor(singleElement())
+        accessor.text = "text2"
+        XCTAssertEqual(accessor.text, "text2", "set text on first single element")
+
+        var element = accessor["ChildElement"].first
+        element.text = "childText1"
+        XCTAssertEqual(element.text, "childText1", "set text for first child element")
+
+        element = accessor["ChildElement"].last
+        element.text = "childText2"
+        XCTAssertEqual(element.text, "childText2", "set text for last child element")
+
+        XCTAssertEqual(
+            try XML.document(accessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"value\">text2<ChildElement>childText1</ChildElement><ChildElement>childText2</ChildElement></RootElement>",
+            "end document has newly added texts"
+        )
+
+        var sequenceAccessor = XML.Accessor(sequence())
+        sequenceAccessor.text = "text"
+        XCTAssertEqual(sequenceAccessor.text, nil, "cannot set text on sequence")
+
+        var accessorElement = sequenceAccessor.first
+        accessorElement.text = "newText"
+        XCTAssertEqual(accessorElement.text, "newText", "set text for first element in sequence")
+
+        accessorElement = sequenceAccessor.last
+        accessorElement.text = "newText2"
+        XCTAssertEqual(accessorElement.text, "newText2", "set text for last element in sequence")
+
+        accessorElement = sequenceAccessor.first["ChildElement1"]
+        accessorElement.text = "childText"
+        XCTAssertEqual(accessorElement.text, nil, "cannot set text for sequence")
+
+        accessorElement = sequenceAccessor.first["ChildElement1"].first
+        accessorElement.text = "childText1"
+        XCTAssertEqual(accessorElement.text, "childText1", "set text for first element of first child")
+
+        accessorElement = sequenceAccessor.first["ChildElement1"].last
+        accessorElement.text = "childText2"
+        XCTAssertEqual(accessorElement.text, "childText2", "set text for last element of first child")
+
+        XCTAssertEqual(
+            try XML.document(sequenceAccessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Element key=\"value\">newText<ChildElement1>childText1</ChildElement1><ChildElement1>childText2</ChildElement1></Element><Element>newText2<ChildElement2></ChildElement2><ChildElement2></ChildElement2></Element>",
+            "end document has newly added texts"
+        )
+    }
     
     func testAttributes() {
         let accessor = XML.Accessor(singleElement())
@@ -243,6 +293,41 @@ class AccessorTests: XCTestCase {
         } else {
             XCTAssert(true, "fail to access name with Failure Accessor")
         }
+    }
+
+    func testSetAttributes() throws {
+        var accessor = XML.Accessor(singleElement())
+        accessor.attributes = ["key": "newValue"]
+        XCTAssertEqual(accessor.attributes, ["key": "newValue"], "edit attribute on first single element")
+
+        var element = accessor["ChildElement"].first
+        element.attributes = ["key": "childAttribute1"]
+        XCTAssertEqual(element.attributes, ["key": "childAttribute1"], "set attribute for first child element")
+
+        element = accessor["ChildElement"].last
+        element.attributes = ["key": "childAttribute2"]
+        XCTAssertEqual(element.attributes, ["key": "childAttribute2"], "set attribute for last child element")
+
+        XCTAssertEqual(
+            try XML.document(accessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"newValue\">text<ChildElement key=\"childAttribute1\"></ChildElement><ChildElement key=\"childAttribute2\"></ChildElement></RootElement>",
+            "end document has updated attributes"
+        )
+
+        let accessor2 = XML.Accessor(singleElementWithChildrenAttributes())
+        var element2 = accessor2["ChildElement1"]
+        element2.attributes["key1"] = "newValue1"
+        XCTAssertEqual(element2.attributes, ["key1": "newValue1"], "edit attribute for child element")
+
+        element2 = accessor2["ChildElement2"]
+        element2.attributes["key2"] = "newValue2"
+        XCTAssertEqual(element2.attributes, ["key2": "newValue2"], "edit attribute for child element")
+
+        XCTAssertEqual(
+            try XML.document(accessor2),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement><ChildElement1 key1=\"newValue1\"></ChildElement1><ChildElement2 key2=\"newValue2\"></ChildElement2></RootElement>",
+            "end document has updated attributes"
+        )
     }
     
     func testAll() {
@@ -343,7 +428,33 @@ class AccessorTests: XCTestCase {
         let failureTexts = failureAccessor.compactMap { $0.text }
         XCTAssertEqual(failureTexts, [], "has no text")
     }
-    
+
+    func testAppend() throws {
+        let accessor = XML.Accessor(singleElement())
+
+        XCTAssertEqual(accessor["RootElement"].text, nil)
+
+        accessor.append(singleElement())
+        XCTAssertEqual(accessor["RootElement"].text, "text")
+
+        XCTAssertEqual(
+            try XML.document(accessor),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"value\">text<ChildElement></ChildElement><ChildElement></ChildElement><RootElement key=\"value\">text<ChildElement></ChildElement><ChildElement></ChildElement></RootElement></RootElement>",
+            "end document has added element"
+        )
+
+        let accessor2 = XML.Accessor(singleElement())
+
+        accessor2["ChildElement"].first.append(singleElementWithChildrenAttributes())
+        XCTAssertEqual(accessor2["ChildElement"].first["RootElement", "ChildElement1"].attributes, ["key1": "value1"])
+        XCTAssertEqual(accessor2["ChildElement"].first["RootElement", "ChildElement2"].attributes, ["key2": "value2"])
+
+        XCTAssertEqual(
+            try XML.document(accessor2),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><RootElement key=\"value\">text<ChildElement><RootElement><ChildElement1 key1=\"value1\"></ChildElement1><ChildElement2 key2=\"value2\"></ChildElement2></RootElement></ChildElement><ChildElement></ChildElement></RootElement>",
+            "end document has added element"
+        )
+    }
     
     func testIterator() {
         let accessor = XML.Accessor(singleElement())
@@ -369,32 +480,30 @@ class AccessorTests: XCTestCase {
     }
     
     fileprivate func singleElement() -> XML.Element {
-        let element = XML.Element(name: "RootElement")
-        element.text = "text"
-        element.attributes = ["key": "value"]
-        element.childElements = [
+        return XML.Element(name: "RootElement", text: "text", attributes: ["key": "value"], childElements: [
             XML.Element(name: "ChildElement"),
             XML.Element(name: "ChildElement")
-        ]
-        return element
+        ])
+    }
+
+    fileprivate func singleElementWithChildrenAttributes() -> XML.Element {
+        return XML.Element(name: "RootElement", childElements: [
+            XML.Element(name: "ChildElement1", attributes: ["key1": "value1"]),
+            XML.Element(name: "ChildElement2", attributes: ["key2": "value2"])
+        ])
     }
     
     fileprivate func sequence() -> [XML.Element] {
-        let elem1 = XML.Element(name: "Element")
-        elem1.text = "text"
-        elem1.attributes = ["key": "value"]
-        elem1.childElements = [
-            XML.Element(name: "ChildElement1"),
-            XML.Element(name: "ChildElement1")
+        return [
+            XML.Element(name: "Element", text: "text", attributes: ["key": "value"], childElements: [
+                XML.Element(name: "ChildElement1"),
+                XML.Element(name: "ChildElement1")
+            ]),
+            XML.Element(name: "Element", text: "text2", childElements: [
+                XML.Element(name: "ChildElement2"),
+                XML.Element(name: "ChildElement2")
+            ])
         ]
-        let elem2 = XML.Element(name: "Element")
-        elem2.text = "text2"
-        elem2.childElements = [
-            XML.Element(name: "ChildElement2"),
-            XML.Element(name: "ChildElement2")
-        ]
-        let elements = [ elem1, elem2 ]
-        return elements
     }
     
     fileprivate func failure() -> XMLError {

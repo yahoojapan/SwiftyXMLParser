@@ -116,16 +116,65 @@ class ConverterTests: XCTestCase {
             XCTAssertEqual(result, extpected)
         }
     }
-}
 
-extension XML.Element {
-    convenience init(name: String,
-                     text: String? = nil,
-                     attributes: [String: String] = [String: String](),
-                     childElements: [XML.Element] = [XML.Element]()) {
-        self.init(name: name)
-        self.text = text
-        self.attributes = attributes
-        self.childElements = childElements
+    func testMakeDocumentEscapingCharacters() throws {
+        let element = XML.Element(name: "name", text: "me&you", childElements: [
+            XML.Element(name: "child", text: "& < > &")
+        ])
+        let converter = XML.Converter(XML.Accessor(element))
+
+        XCTAssertEqual(
+            try converter.makeDocument(),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><name>me&amp;you<child>&amp; &lt; &gt; &amp;</child></name>",
+            "escape characters when making xml document"
+        )
+    }
+
+    func testMakeDocumentWithoutAttributes() throws {
+        let element = XML.Element(name: "name")
+        let converter = XML.Converter(XML.Accessor(element))
+
+        XCTAssertEqual(
+            try converter.makeDocument(),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><name></name>",
+            "convert xml document without extra spaces when no attributes are provided"
+        )
+
+        let element2 = XML.Element(name: "name",
+                                   text: "text",
+                                   attributes: ["key": "value"],
+                                   childElements: [
+                                    XML.Element(name: "name1"),
+                                    XML.Element(name: "name2", text: "text2")
+                                   ])
+        let converter2 = XML.Converter(XML.Accessor(element2))
+
+        XCTAssertEqual(
+            try converter2.makeDocument(),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><name key=\"value\">text<name1></name1><name2>text2</name2></name>",
+            "convert xml document with child elements without extra spaces when no attributes are provided"
+        )
+    }
+
+    func testMakeWithoutDeclaration() throws {
+        let element = XML.Element(name: "name")
+        let converter = XML.Converter(XML.Accessor(element))
+
+        XCTAssertEqual(
+            try converter.makeDocument(withDeclaration: false),
+            "<name></name>",
+            "convert xml document without xml declaration header"
+        )
+
+        let element2 = XML.Element(name: "name",
+                                   text: "text",
+                                   attributes: ["key": "value"])
+        let converter2 = XML.Converter(XML.Accessor(element2))
+
+        XCTAssertEqual(
+            try converter2.makeDocument(withDeclaration: false),
+            "<name key=\"value\">text</name>",
+            "convert xml document without xml declaration header"
+        )
     }
 }
