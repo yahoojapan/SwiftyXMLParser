@@ -88,7 +88,28 @@ public func ?<< <T>(lhs: inout [T], rhs: T?) {
 open class XML {
 
     /**
-     Interface to parse Data
+    Interface to parse InputStream
+    
+    - parameter strea:InputStream for an XML document
+    - returns:Accessor object to access XML document
+    */
+    open class func parse(_ stream: InputStream) -> Accessor {
+        return Parser().parse(stream)
+    }
+    
+    
+    /**
+    Interface to parse NSData
+    
+    - parameter data:NSData XML document
+    - returns:Accessor object to access XML document
+    */
+    open class func parse(_ data: Data) -> Accessor {
+        return Parser().parse(data)
+    }
+    
+    /**
+     Interface to parse String
      
      - parameter data:Data XML document
      - parameter manner:CharacterSet If you want to trim text (default off)
